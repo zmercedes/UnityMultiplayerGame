@@ -8,10 +8,12 @@ public class DamagePushback : MonoBehaviour {
 	public float time = 0.25f;
 
 	void OnCollisionEnter2D(Collision2D other){
-		Rigidbody2D rb = other.transform.gameObject.GetComponent<Rigidbody2D>();
-		rb.velocity = transform.up * pushBackValue;
-		other.gameObject.GetComponent<CharacterInfo>().decreaseHealth(damageValue);
-		StartCoroutine(PushBackLerp(rb));
+		if(other.gameObject.tag == "Player"){
+			Rigidbody2D rb = other.transform.gameObject.GetComponent<Rigidbody2D>();
+			rb.velocity = transform.up * pushBackValue;
+			other.gameObject.GetComponent<CharacterInfo>().decreaseHealth(damageValue);
+			StartCoroutine(PushBackLerp(rb));
+		}
 	}
 
 	IEnumerator PushBackLerp(Rigidbody2D rb){
