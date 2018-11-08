@@ -389,7 +389,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 561afd0b1f35f7141822d5c2a649d20b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
+  moveSpeed: 10
   spinTime: 0.1
   windUpTime: 0.1
   recoveryTime: 0.25

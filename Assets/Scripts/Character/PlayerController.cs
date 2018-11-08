@@ -42,18 +42,18 @@ public class PlayerController : MonoBehaviour {
 
 		input = input.normalized;
 
-		if((Input.GetButtonDown("Jump") || Input.GetButtonDown("Fire1")) && !attacking)
-			StartCoroutine(RotateSword());
-
 		// if(input.x == -1)
 		// 	transform.localScale = new Vector3(-1,1,1);
 		// else
 		// 	transform.localScale = new Vector3(1,1,1);
 
-		transform.Translate(input * moveSpeed * Time.deltaTime);
+		// transform.Translate(input * moveSpeed * Time.fixedDeltaTime);
 	}
 
 	void FixedUpdate(){
+		if((Input.GetButtonDown("Jump") || Input.GetButtonDown("Fire1")) && !attacking)
+			StartCoroutine(RotateSword());
+			
 		transform.Translate (input * moveSpeed *Time.fixedDeltaTime);
 	}
 
@@ -75,21 +75,21 @@ public class PlayerController : MonoBehaviour {
 
 		while(elapsed < windUpTime){
 			player.rotation = Quaternion.Slerp(initial, from, elapsed/windUpTime);
-			elapsed += Time.deltaTime;
+			elapsed += Time.fixedDeltaTime;
 			yield return null;
 		}
 		elapsed = 0f;
 
 		while(elapsed < spinTime){
 			player.rotation = Quaternion.Slerp(from, to, elapsed/spinTime);
-			elapsed += Time.deltaTime;
+			elapsed += Time.fixedDeltaTime;
 			yield return null;
 		}
 		elapsed = 0f;
 
 		while(elapsed < recoveryTime){
 			player.rotation = Quaternion.Slerp(to, initial, elapsed/recoveryTime);
-			elapsed += Time.deltaTime;
+			elapsed += Time.fixedDeltaTime;
 			yield return null;
 		}
 
