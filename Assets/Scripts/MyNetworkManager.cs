@@ -61,15 +61,16 @@ public class MyNetworkManager : NetworkManager {
 	}
 
 	public void JoinServerButton(Text ipText){
+		menu.SetActive(false);
+		loadText.SetActive(true);
+		cancelButton.SetActive(true);
+		
 		if(ipText.text != "")
 			networkAddress = ipText.text;
 		else
 			networkAddress = "localhost";
 
 		StartClient();
-		menu.SetActive(false);
-		loadText.SetActive(true);
-		cancelButton.SetActive(true);
 	}
 
 	public void DisconnectButton(){
