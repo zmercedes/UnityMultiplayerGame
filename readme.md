@@ -17,8 +17,9 @@ Project files for a unity multiplayer game implemented using UNet.
 ### Procedurally Generated Map
 - Generates a different map every time server starts.
 - Cave like structure generated using a random seed and cellular automata.
+- Biome system allows the map to have different themes, such as forest or desert biomes. (not fully implemented)
 - Syncing the seed across clients assures that map will always be the same across server/clients.
-- Keeps track of walkable positions so that objects/players can be generated within map borders, and lets server know when its ready so players can spawn in.
+- Uses coordinate system to keep track of walkable positions so that objects/players can be generated within map borders, and lets server know when its ready so players can spawn in.
 
 ### Collectibles
 - A collectable object generator lives on the server and spawns coins into map once it's ready.
@@ -33,4 +34,4 @@ Project files for a unity multiplayer game implemented using UNet.
 
 ### Technical Desirables
 - separation of client/server
-- implementing observer pattern for UI
+- implementing observer pattern for UI/other things
