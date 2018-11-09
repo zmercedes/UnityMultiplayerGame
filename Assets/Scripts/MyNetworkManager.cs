@@ -25,6 +25,12 @@ public class MyNetworkManager : NetworkManager {
 		StartCoroutine(ClientSpawn(conn));
 	}
 
+	public override void OnClientDisconnect(NetworkConnection conn){
+		disconnectButton.SetActive(false);
+		title.SetActive(true);
+		menu.SetActive(true);
+	}
+
 	IEnumerator ClientSpawn(NetworkConnection conn){
 		// if(isLocalPlayer)
 		
@@ -64,7 +70,7 @@ public class MyNetworkManager : NetworkManager {
 		menu.SetActive(false);
 		loadText.SetActive(true);
 		cancelButton.SetActive(true);
-		
+
 		if(ipText.text != "")
 			networkAddress = ipText.text;
 		else
