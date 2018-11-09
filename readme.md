@@ -27,6 +27,10 @@ Project files for a unity multiplayer game implemented using UNet.
 # Upcoming Features
 - multiple classes to choose from
 - player combat
-- separation of client/server
 - world mechanics (shops, forges, world bosses)
 - game modes (ffa, coop level progression, etc)
+- polish! (better character sprites, more interesting environments, visual effects, etc)
+
+### Technical Desirables
+- separation of client/server
+- implementing observer pattern for UI
