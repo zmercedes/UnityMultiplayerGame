@@ -41,19 +41,12 @@ public class PlayerController : MonoBehaviour {
 		input = new Vector2(Input.GetAxisRaw("Horizontal"),Input.GetAxisRaw("Vertical"));
 
 		input = input.normalized;
-
-		// if(input.x == -1)
-		// 	transform.localScale = new Vector3(-1,1,1);
-		// else
-		// 	transform.localScale = new Vector3(1,1,1);
-
-		// transform.Translate(input * moveSpeed * Time.fixedDeltaTime);
 	}
 
 	void FixedUpdate(){
 		if((Input.GetButtonDown("Jump") || Input.GetButtonDown("Fire1")) && !attacking)
 			StartCoroutine(RotateSword());
-			
+
 		transform.Translate (input * moveSpeed *Time.fixedDeltaTime);
 	}
 
