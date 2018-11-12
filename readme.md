@@ -45,5 +45,5 @@ Project files for a unity multiplayer game implemented using UNet.
 ..2. wait on map spawn. Map is spawned from the server and the client must wait to receive it.
 ..3. wait on map to be ready. Map contains a ready flag that is accessible by the client.
 ..4. generate player/modify UI. 
-- Since the network manager is not destroyed on load, when a player disconnects, they load the offline scene which contains a new copy of the network manager. There must only be one network manager active at a time.
+2. Since the network manager is not destroyed on load, when a player disconnects, they load the offline scene which contains a new copy of the network manager. There must only be one network manager active at a time.
 ..* solved by adding a check in networkmanager.Awake() which causes copies to self destruct when more than one exists.
