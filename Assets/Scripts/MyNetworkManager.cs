@@ -37,14 +37,14 @@ public class MyNetworkManager : NetworkManager {
 		Scene currentScene = SceneManager.GetActiveScene();
 		while(currentScene.name != "World"){
 			currentScene = SceneManager.GetActiveScene();
-			yield return new WaitForSeconds(0.1f);
+			yield return null;
 		}
 
 		GameObject map = GameObject.FindWithTag("Map");
 		
 		while(map == null){
 			map = GameObject.FindWithTag("Map");
-			yield return new WaitForSeconds(0.1f);
+			yield return null;
 		}
 
 		MapGen mapGen = map.GetComponent<MapGen>();
@@ -57,6 +57,7 @@ public class MyNetworkManager : NetworkManager {
 		loadText.SetActive(false);
 		cancelButton.SetActive(false);
 		disconnectButton.SetActive(true);
+		yield return null;
 	}
 
 	public void StartServerButton(){

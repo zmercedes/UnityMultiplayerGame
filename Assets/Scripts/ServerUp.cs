@@ -22,9 +22,9 @@ public class ServerUp : NetworkBehaviour {
 		mapGen.SetSeed();
 		map.SetActive(true);
 		while(!mapGen.Ready)
-			yield return new WaitForSeconds(0.1f);
+			yield return null;
 
-		// Debug.Log(mapGen.WalkableTiles.Count);
+		// moves spawn locations within map borders
 		foreach(Transform child in transform){
 			int position = UnityEngine.Random.Range(0,mapGen.WalkableTiles.Count -1);
 			child.position = Coord.ToWorldPoint(mapGen.WalkableTiles[position]);
