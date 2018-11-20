@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
 
-public class PlayerSetup : NetworkBehaviour {
+public class PlayerNetworkActions : NetworkBehaviour {
 
 	[SerializeField]
 	Behaviour[] componentsToDisable;
@@ -11,7 +11,11 @@ public class PlayerSetup : NetworkBehaviour {
 	
 	public GameObject UI;
 
+	// main camera object
 	Camera cam;
+
+	// weapon collider gameobject
+	GameObject weaponCollider;
 
 	void Start(){
 		cam = Camera.main;
@@ -23,6 +27,7 @@ public class PlayerSetup : NetworkBehaviour {
 			UI = Instantiate(UIPrefab, canvas.transform) as GameObject;
 			cam.gameObject.SetActive(false);
 		}
+		weaponCollider = transform.GetChild(0).GetChild(0).GetChild(1).gameObject;
 	}
 
 	void OnDisable(){
@@ -33,5 +38,19 @@ public class PlayerSetup : NetworkBehaviour {
 			Destroy(UI);
 		}
 		Destroy(this.gameObject);
+	}
+
+	public void AttackToggle(bool flag){
+		CmdAttackToggle(flag);
+	}
+
+	[Command]
+	void CmdAttackToggle(bool flag){
+		RpcAttackToggle(flag);
+	}
+
+	[ClientRpc]
+	void RpcAttackToggle(bool flag){
+		weaponCollider.SetActive(flag);
 	}
 }

@@ -3,21 +3,24 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
 
+	// attack rotation info
 	public float moveSpeed = 5f;
 	public float spinTime = 0.25f;
 	public float windUpTime = 0.1f;
 	public float recoveryTime = 0.25f;
-
-	// mouse info
-	Vector3 lastMousePosition;
-	Vector2 input;
-	Transform player;
-
-	// 
 	Vector3 initialPosition;
 	Vector3 initialRotation;
 	Vector3 spinPosition;
+	
+	// mouse info
+	Vector3 lastMousePosition;
 
+	Vector2 input;
+	Transform player;
+
+	PlayerNetworkActions netActions;
+
+	// camera reference for rotating to mouse
 	Camera cam;
 
 	bool attacking = false;
@@ -26,14 +29,15 @@ public class PlayerController : MonoBehaviour {
 		cam = transform.GetChild(1).gameObject.GetComponent<Camera>();
 		lastMousePosition = Input.mousePosition;
 		player = transform.GetChild(0);
-		Rotation();
+		netActions = GetComponent<PlayerNetworkActions>();
+		MouseRotation();
 	}
 
 	// Update is called once per frame
 	void Update () {
 		if(Input.mousePosition != lastMousePosition){
 
-			Rotation();
+			MouseRotation();
 
 			lastMousePosition = Input.mousePosition;
 		}
@@ -45,12 +49,13 @@ public class PlayerController : MonoBehaviour {
 
 	void FixedUpdate(){
 		if((Input.GetButtonDown("Jump") || Input.GetButtonDown("Fire1")) && !attacking)
-			StartCoroutine(RotateSword());
+			StartCoroutine(Attack());
 
-		transform.Translate (input * moveSpeed *Time.fixedDeltaTime);
+		if(input != Vector2.zero)
+			transform.Translate (input * moveSpeed *Time.fixedDeltaTime);
 	}
 
-	void Rotation(){
+	void MouseRotation(){
 		Vector3 mousePoint = cam.ScreenToWorldPoint(lastMousePosition);
 		Vector3 diff = mousePoint - transform.position;
 		diff.Normalize();
@@ -58,8 +63,9 @@ public class PlayerController : MonoBehaviour {
 		player.rotation = Quaternion.Euler(0f,0f, rot_z-90f);
 	}
 
-	IEnumerator RotateSword(){
+	IEnumerator Attack(){
 		attacking = true;
+		netActions.AttackToggle(attacking);
 		Quaternion initial = player.rotation;
 		Quaternion from = player.rotation * Quaternion.Euler(transform.forward * 30f);
 		Quaternion to = player.rotation * Quaternion.Euler(transform.forward * -90f);
@@ -88,6 +94,7 @@ public class PlayerController : MonoBehaviour {
 
 		player.rotation = initial;
 		attacking = false;
+		netActions.AttackToggle(attacking);
 	}
 
 	// void OnCollisionEnter2D(Collision2D coll){
