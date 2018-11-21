@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
+using System.Collections;
 
 public class PlayerNetworkActions : NetworkBehaviour {
 
@@ -11,13 +12,21 @@ public class PlayerNetworkActions : NetworkBehaviour {
 	
 	public GameObject UI;
 
-	Vector3 up;
+	float spinTime = 0.1f;
+	float windUpTime = 0.1f;
+	float recoveryTime = 0.25f;
 
 	// main camera object
 	Camera cam;
 
 	// weapon collider gameobject
 	GameObject weaponCollider;
+
+	Transform player;
+
+	bool attacking = false;
+
+	Vector3 up;
 
 	void Start(){
 		cam = Camera.main;
@@ -29,6 +38,7 @@ public class PlayerNetworkActions : NetworkBehaviour {
 			UI = Instantiate(UIPrefab, canvas.transform) as GameObject;
 			cam.gameObject.SetActive(false);
 		}
+		player = transform.GetChild(0);
 		weaponCollider = transform.GetChild(0).GetChild(0).GetChild(1).gameObject;
 	}
 
@@ -48,18 +58,56 @@ public class PlayerNetworkActions : NetworkBehaviour {
 		}
 	}
 
-	public void AttackToggle(bool flag, Vector3 direction){
-		CmdAttackToggle(flag, direction);
+	public void AttackToggle(){
+		if(!attacking){
+			StartCoroutine(Attack());
+			CmdAttackToggle();
+		}
 	}
 
 	[Command]
-	void CmdAttackToggle(bool flag, Vector3 direction){
-		RpcAttackToggle(flag, direction);
+	void CmdAttackToggle(){
+		RpcAttackToggle();
 	}
 
 	[ClientRpc]
-	void RpcAttackToggle(bool flag, Vector3 direction){
-		weaponCollider.SetActive(flag);
-		up = direction;
+	void RpcAttackToggle(){
+		StartCoroutine(Attack());
+	}
+
+	IEnumerator Attack(){
+		up = player.up;
+		attacking = true;
+		weaponCollider.SetActive(!isLocalPlayer);
+
+		Quaternion initial = player.rotation;
+		Quaternion from = player.rotation * Quaternion.Euler(transform.forward * 30f);
+		Quaternion to = player.rotation * Quaternion.Euler(transform.forward * -90f);
+
+		float elapsed = 0f;
+
+		while(elapsed < windUpTime){
+			player.rotation = Quaternion.Slerp(initial, from, elapsed/windUpTime);
+			elapsed += Time.fixedDeltaTime;
+			yield return null;
+		}
+		elapsed = 0f;
+
+		while(elapsed < spinTime){
+			player.rotation = Quaternion.Slerp(from, to, elapsed/spinTime);
+			elapsed += Time.fixedDeltaTime;
+			yield return null;
+		}
+		elapsed = 0f;
+
+		while(elapsed < recoveryTime){
+			player.rotation = Quaternion.Slerp(to, initial, elapsed/recoveryTime);
+			elapsed += Time.fixedDeltaTime;
+			yield return null;
+		}
+
+		player.rotation = initial;
+		attacking = false;
+		weaponCollider.SetActive(false);
 	}
 }
