@@ -46,10 +46,10 @@ Project files for a unity multiplayer game implemented using UNet.
 
 ## Issues
 #### Getting player/coins to spawn after map has established reachable locations.
-- solved by implementing a client startup coroutine which waits on the server to be finished generating the map. The client has to wait on several things to happen before it can spawn in a player. As such, this coroutine has 4 steps:
+- solved by implementing a client startup coroutine which waits on the server to be finished generating the map. The client has to wait on several things to happen before it can spawn in a player. As such, this coroutine has ~~4~~ 3 steps:
   1. wait on scene load. Scene will change on connecting to the server, so client waits until the online scene is loaded.
   2. wait on map spawn. Map is spawned from the server and the client must wait to receive it.
-  3. wait on map to be ready. Map contains a ready flag that is accessible by the client.
+  3. ~~wait on map to be ready. Map contains a ready flag that is accessible by the client.~~ map is always ready before its spawned, so checking if its ready after spawning is pointless.
   4. generate player/coins/modify UI. 
 
 #### Since the network manager is not destroyed on load, when a player disconnects, they load the offline scene which contains a new copy of the network manager. There must only be one network manager active at a time.
@@ -57,3 +57,6 @@ Project files for a unity multiplayer game implemented using UNet.
 
 #### Getting weapon collider/damage to activate across clients
   * solved by creating command/rpc in PlayerSetup, and changing the name to PlayerNetworkActions
+
+#### Getting the forward direction of character as the launch direction of weapons without 
+  * This issue is odd because using a syncvar to update the forward direction wasn't working. i'm assuming that's because the PlayerController script is deactivated on non local players, and for whatever reason if a script updates a syncvar on a client but the same script is deactivated on other clients, the syncvar will not update. instead, i changed the AttackToggle command/rpc to take the direction in as a parameter and update it that way.

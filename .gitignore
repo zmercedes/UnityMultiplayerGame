@@ -34,3 +34,7 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+
+# Sublime workspace stuff
+*.sublime-workspace
+*.sublime-project
