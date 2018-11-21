@@ -11,6 +11,8 @@ public class PlayerNetworkActions : NetworkBehaviour {
 	
 	public GameObject UI;
 
+	Vector3 up;
+
 	// main camera object
 	Camera cam;
 
@@ -40,17 +42,24 @@ public class PlayerNetworkActions : NetworkBehaviour {
 		Destroy(this.gameObject);
 	}
 
-	public void AttackToggle(bool flag){
-		CmdAttackToggle(flag);
+	public Vector3 Up{
+		get{
+			return up;
+		}
+	}
+
+	public void AttackToggle(bool flag, Vector3 direction){
+		CmdAttackToggle(flag, direction);
 	}
 
 	[Command]
-	void CmdAttackToggle(bool flag){
-		RpcAttackToggle(flag);
+	void CmdAttackToggle(bool flag, Vector3 direction){
+		RpcAttackToggle(flag, direction);
 	}
 
 	[ClientRpc]
-	void RpcAttackToggle(bool flag){
+	void RpcAttackToggle(bool flag, Vector3 direction){
 		weaponCollider.SetActive(flag);
+		up = direction;
 	}
 }

@@ -276,7 +276,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1329189727847584}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.0750265, y: 1.2385306, z: 0}
+  m_LocalPosition: {x: 13.093754, y: -6.977667, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4537743272338626}
@@ -371,7 +371,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 10
+  m_Mass: 50
   m_LinearDrag: 1
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -404,7 +404,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -498,7 +498,7 @@ MonoBehaviour:
   pushBackValue: 10
   damageValue: 2
   time: 0.25
-  guide: {fileID: 0}
+  guide: {x: 0, y: 0, z: 0}
 --- !u!114 &114273738404457120
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -617,17 +617,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44d3ac83c8d4c4e40a3cb93eb301fbaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SyncVarDirtyBits: 0
-  m_LastSendTime: 0
-  m_SyncVarGuard: 0
-  m_MyView: {fileID: 0}
   componentsToDisable:
   - {fileID: 114038917414115978}
   - {fileID: 20248533251560274}
   - {fileID: 81676126439761654}
   UIPrefab: {fileID: 1008838259517816, guid: 65c2e4901ea4cdc498e01e7215709928, type: 2}
   UI: {fileID: 0}
-  cam: {fileID: 0}
 --- !u!114 &114781654609365998
 MonoBehaviour:
   m_ObjectHideFlags: 1

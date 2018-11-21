@@ -65,7 +65,8 @@ public class PlayerController : MonoBehaviour {
 
 	IEnumerator Attack(){
 		attacking = true;
-		netActions.AttackToggle(attacking);
+		netActions.AttackToggle(attacking,player.up);
+
 		Quaternion initial = player.rotation;
 		Quaternion from = player.rotation * Quaternion.Euler(transform.forward * 30f);
 		Quaternion to = player.rotation * Quaternion.Euler(transform.forward * -90f);
@@ -94,10 +95,6 @@ public class PlayerController : MonoBehaviour {
 
 		player.rotation = initial;
 		attacking = false;
-		netActions.AttackToggle(attacking);
+		netActions.AttackToggle(attacking, Vector3.zero);
 	}
-
-	// void OnCollisionEnter2D(Collision2D coll){
-	// 	Debug.Log("colliding with " + coll.collider.name);
-	// }
 }
