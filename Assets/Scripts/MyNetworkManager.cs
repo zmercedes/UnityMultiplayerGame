@@ -14,6 +14,7 @@ public class MyNetworkManager : NetworkManager {
 		if (FindObjectsOfType(GetType()).Length > 1)
 			Destroy(gameObject);
 
+		Application.targetFrameRate = 60; // possibly does not belong here
 		title = transform.GetChild(0).GetChild(0).gameObject;
 		menu = transform.GetChild(0).GetChild(1).gameObject;
 		loadText = transform.GetChild(0).GetChild(2).gameObject;
@@ -32,25 +33,21 @@ public class MyNetworkManager : NetworkManager {
 	}
 
 	IEnumerator ClientSpawn(NetworkConnection conn){
-		// if(isLocalPlayer)
-		
+		// make sure the correct scene is loaded		
 		Scene currentScene = SceneManager.GetActiveScene();
 		while(currentScene.name != "World"){
 			currentScene = SceneManager.GetActiveScene();
 			yield return null;
 		}
 
+		// make sure the map is loaded
 		GameObject map = GameObject.FindWithTag("Map");
-		
 		while(map == null){
 			map = GameObject.FindWithTag("Map");
 			yield return null;
 		}
 
-		MapGen mapGen = map.GetComponent<MapGen>();
-
-		while(!mapGen.Ready)
-			yield return null;
+		// can display character select screen here?
 		
 		ClientScene.AddPlayer(conn, 0);
 		title.SetActive(false);

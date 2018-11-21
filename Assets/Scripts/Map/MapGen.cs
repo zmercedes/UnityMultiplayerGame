@@ -12,7 +12,6 @@ public class MapGen : NetworkBehaviour {
 	[SyncVar] // generates same map across server/clients
 	string seed;
 
-	[SyncVar] // tells me if server has generated a map
 	bool ready;
 
 	// radius of passages between rooms
