@@ -43,12 +43,9 @@ public class CharacterInfo : NetworkBehaviour {
 		healthBar.UpdateBar( health, maxHealth );
 	}
 
+	// health decrease functions
 	public void HealthDecrease(int number){
 		CmdHealthDecrease(number);
-	}
-
-	public void HealtIncrease(int number){
-		CmdHealthIncrease(number);
 	}
 
 	[Command]
@@ -61,11 +58,16 @@ public class CharacterInfo : NetworkBehaviour {
 		DecreaseHealth(number);
 	}
 
+	// health increase functions
+	public void HealtIncrease(int number){
+		CmdHealthIncrease(number);
+	}
+
 	[Command]
 	void CmdHealthIncrease(int number){
 		RpcHealthIncrease(number);
 	}
-
+	
 	[ClientRpc]
 	void RpcHealthIncrease(int number){
 		IncreaseHealth(number);
