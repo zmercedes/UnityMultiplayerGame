@@ -17,7 +17,7 @@ public class DamagePushback : MonoBehaviour {
 				direction = transform.parent.parent.parent.gameObject.GetComponent<PlayerNetworkActions>().Up;
 			
 			rb.velocity = direction * pushBackValue;
-			other.gameObject.GetComponent<CharacterInfo>().decreaseHealth(damageValue);
+			other.gameObject.GetComponent<CharacterInfo>().HealthDecrease(damageValue);
 			StartCoroutine(PushBackLerp(rb));
 			Physics2D.IgnoreCollision(other.GetComponent<Collider2D>(), GetComponent<Collider2D>());
 		}

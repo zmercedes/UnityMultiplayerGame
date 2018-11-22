@@ -27,37 +27,52 @@ public class CharacterInfo : NetworkBehaviour {
 		health = maxHealth;
 	}
 
-	public void decreaseHealth (int number){
+	void DecreaseHealth (int number){
 		if(isLocalPlayer){
 			health -= number;
 			if (health < 0)
 				health = 0;
 
 			healthBar.UpdateBar( health, maxHealth );
-			CmdHealthUpdate(health);
 		}
 	}
 
-	public void increaseHealth (int number){
+	void IncreaseHealth (int number){
 		if(isLocalPlayer){
 			health += number;
 			if (health > maxHealth)
 				health = maxHealth;
 	
 			healthBar.UpdateBar( health, maxHealth );
-			CmdHealthUpdate(health);
 		}
 	}
 
+	public void HealthDecrease(int number){
+		CmdHealthDecrease(number);
+	}
+
+	public void HealtIncrease(int number){
+		CmdHealthIncrease(number);
+	}
+
 	[Command]
-	void CmdHealthUpdate(int newHealth){
-		RpcHealthUpdate(newHealth);
+	void CmdHealthDecrease(int number){
+		RpcHealthDecrease(number);
 	}
 
 	[ClientRpc]
-	void RpcHealthUpdate(int newHealth){
-		health = newHealth;
-		healthBar.UpdateBar(newHealth, maxHealth);
+	void RpcHealthDecrease(int number){
+		DecreaseHealth(number);
+	}
+
+	[Command]
+	void CmdHealthIncrease(int number){
+		RpcHealthDecrease(number);
+	}
+
+	[ClientRpc]
+	void RpcHealthIncrease(int number){
+		IncreaseHealth(number);
 	}
 
 	void OnTriggerEnter2D(Collider2D col){
