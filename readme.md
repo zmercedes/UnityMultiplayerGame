@@ -59,4 +59,7 @@ Project files for a unity multiplayer game implemented using UNet.
   * solved by creating command/rpc in PlayerSetup, and changing the name to PlayerNetworkActions
 
 #### Getting the forward direction of character as the launch direction of weapons without 
-  * This issue is odd because using a syncvar to update the forward direction wasn't working. i'm assuming that's because the PlayerController script is deactivated on non local players, and for whatever reason if a script updates a syncvar on a client but the same script is deactivated on other clients, the syncvar will not update. instead, i changed the AttackToggle command/rpc to take the direction in as a parameter and update it that way.
+  * This issue is odd because using a syncvar to update the forward direction wasn't working. i'm assuming that's because the PlayerController script is deactivated on non local players, and for whatever reason if a script updates a syncvar on a client but the same script is deactivated on other clients, the syncvar will not update. instead, i ~~changed the AttackToggle command/rpc to take the direction in as a parameter and update it that way~~ made the attack animation enumerator get the up direction in PlayerNetworkAction.
+
+#### Making attack animation smoother across clients
+  * solved by moving the attack animation enumerator to PlayerNetworkActions and making that run on all clients on attacking.
