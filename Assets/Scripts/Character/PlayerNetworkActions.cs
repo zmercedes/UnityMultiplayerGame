@@ -12,20 +12,22 @@ public class PlayerNetworkActions : NetworkBehaviour {
 	
 	public GameObject UI;
 
-	float spinTime = 0.1f;
+	// player transform
+	Transform player;
+	// attack animation times
 	float windUpTime = 0.1f;
-	float recoveryTime = 0.25f;
+	float spinTime = 0.1f;
+	float recoveryTime = 0.2f;
 
+	// is the player currently attacking?
+	bool attacking = false;
 	// main camera object
 	Camera cam;
 
 	// weapon collider gameobject
 	GameObject weaponCollider;
 
-	Transform player;
-
-	bool attacking = false;
-
+	// player forward direction at the start of attack
 	Vector3 up;
 
 	void Start(){
@@ -59,10 +61,8 @@ public class PlayerNetworkActions : NetworkBehaviour {
 	}
 
 	public void AttackToggle(){
-		if(!attacking){
-			StartCoroutine(Attack());
+		if(!attacking)
 			CmdAttackToggle();
-		}
 	}
 
 	[Command]
@@ -78,8 +78,7 @@ public class PlayerNetworkActions : NetworkBehaviour {
 	IEnumerator Attack(){
 		up = player.up;
 		attacking = true;
-		weaponCollider.SetActive(!isLocalPlayer);
-
+		weaponCollider.SetActive(isLocalPlayer);
 		Quaternion initial = player.rotation;
 		Quaternion from = player.rotation * Quaternion.Euler(transform.forward * 30f);
 		Quaternion to = player.rotation * Quaternion.Euler(transform.forward * -90f);
