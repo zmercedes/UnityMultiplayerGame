@@ -78,7 +78,7 @@ public class PlayerNetworkActions : NetworkBehaviour {
 	IEnumerator Attack(){
 		up = player.up;
 		attacking = true;
-		weaponCollider.SetActive(isLocalPlayer);
+		weaponCollider.SetActive(!isLocalPlayer);
 		Quaternion initial = player.rotation;
 		Quaternion from = player.rotation * Quaternion.Euler(transform.forward * 30f);
 		Quaternion to = player.rotation * Quaternion.Euler(transform.forward * -90f);

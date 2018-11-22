@@ -10,16 +10,19 @@ public class DamagePushback : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other){
 		if(other.gameObject.tag == "Player"){
-			Rigidbody2D rb = other.gameObject.GetComponent<Rigidbody2D>();
-			
-			direction = transform.up;
-			if(gameObject.layer == 8)
-				direction = transform.parent.parent.parent.gameObject.GetComponent<PlayerNetworkActions>().Up;
-			
-			rb.velocity = direction * pushBackValue;
-			other.gameObject.GetComponent<CharacterInfo>().HealthDecrease(damageValue);
-			StartCoroutine(PushBackLerp(rb));
-			Physics2D.IgnoreCollision(other.GetComponent<Collider2D>(), GetComponent<Collider2D>());
+			CharacterInfo charInfo = other.gameObject.GetComponent<CharacterInfo>();
+			if(charInfo.isLocalPlayer){
+				Rigidbody2D rb = other.gameObject.GetComponent<Rigidbody2D>();
+				
+				direction = transform.up;
+				if(gameObject.layer == 8)
+					direction = transform.parent.parent.parent.gameObject.GetComponent<PlayerNetworkActions>().Up;
+				
+				rb.velocity = direction * pushBackValue;
+				charInfo.HealthDecrease(damageValue);
+				StartCoroutine(PushBackLerp(rb));
+				Physics2D.IgnoreCollision(other.GetComponent<Collider2D>(), GetComponent<Collider2D>());
+			}
 		}
 	}
 

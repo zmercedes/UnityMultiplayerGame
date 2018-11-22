@@ -28,23 +28,19 @@ public class CharacterInfo : NetworkBehaviour {
 	}
 
 	void DecreaseHealth (int number){
-		if(isLocalPlayer){
-			health -= number;
-			if (health < 0)
-				health = 0;
+		health -= number;
+		if (health < 0)
+			health = 0;
 
-			healthBar.UpdateBar( health, maxHealth );
-		}
+		healthBar.UpdateBar( health, maxHealth );
 	}
 
 	void IncreaseHealth (int number){
-		if(isLocalPlayer){
-			health += number;
-			if (health > maxHealth)
-				health = maxHealth;
-	
-			healthBar.UpdateBar( health, maxHealth );
-		}
+		health += number;
+		if (health > maxHealth)
+			health = maxHealth;
+
+		healthBar.UpdateBar( health, maxHealth );
 	}
 
 	public void HealthDecrease(int number){
@@ -67,7 +63,7 @@ public class CharacterInfo : NetworkBehaviour {
 
 	[Command]
 	void CmdHealthIncrease(int number){
-		RpcHealthDecrease(number);
+		RpcHealthIncrease(number);
 	}
 
 	[ClientRpc]
