@@ -8,7 +8,8 @@ Project files for a unity multiplayer game implemented using UNet.
 
 ### Player
 - PlayerController moves character in 8 directions and rotates to face mouse direction. it also has a basic attack animation that plays on click or pressing spacebar.
-- PlayerNetworkActions readies prefab by deactivating specific components that all players contain which should only be active on the local player owned prefab. It also contains commands for syncing player actions across clients.
+- PlayerSetup readies prefab by deactivating specific components that all players contain which should only be active on the local player owned prefab. 
+- PlayerActions contains commands for syncing player actions across clients, such as attacking or dashing.
 - CharacterInfo is a networkbehaviour that keeps track of player attributes such as health, coins, etc. it also handles displaying this information to the players. localplayers will have a healthbar and coin counter, while remote players display a smaller healthbar beneath them.
 - Uses NetworkTransform and NetworkTransformChild to sync its position on the map.
 - Player can damage other players using their weapon
