@@ -16,7 +16,7 @@ public class CharacterInfo : NetworkBehaviour {
 
 	void Start (){
 		if(isLocalPlayer){
-			UI = GetComponent<PlayerNetworkActions>().UI;
+			UI = GetComponent<PlayerSetup>().UI;
 			coinText = UI.transform.GetChild(1).GetComponent<Text>();
 			healthBar = UI.transform.GetChild(2).GetChild(0).gameObject.GetComponent<SimpleHealthBar>();
 		} else {
@@ -59,7 +59,7 @@ public class CharacterInfo : NetworkBehaviour {
 	}
 
 	// health increase functions
-	public void HealtIncrease(int number){
+	public void HealthIncrease(int number){
 		CmdHealthIncrease(number);
 	}
 

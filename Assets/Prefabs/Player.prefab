@@ -123,9 +123,10 @@ GameObject:
   - component: {fileID: 4553895606016694}
   - component: {fileID: 50519810418511068}
   - component: {fileID: 58711179417992824}
-  - component: {fileID: 114780369274311176}
+  - component: {fileID: 114786250639534664}
   - component: {fileID: 114823902426701884}
   - component: {fileID: 114038917414115978}
+  - component: {fileID: 114780369274311176}
   - component: {fileID: 114492903346577008}
   - component: {fileID: 114755357247917254}
   - component: {fileID: 114039470088275986}
@@ -446,9 +447,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 10
-  spinTime: 0.1
-  windUpTime: 0.1
-  recoveryTime: 0.25
 --- !u!114 &114039470088275986
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -617,12 +615,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44d3ac83c8d4c4e40a3cb93eb301fbaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  componentsToDisable:
-  - {fileID: 114038917414115978}
-  - {fileID: 20248533251560274}
-  - {fileID: 81676126439761654}
-  UIPrefab: {fileID: 1008838259517816, guid: 65c2e4901ea4cdc498e01e7215709928, type: 2}
-  UI: {fileID: 0}
 --- !u!114 &114781654609365998
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -669,6 +661,23 @@ MonoBehaviour:
   displayText: 0
   barText: {fileID: 0}
   additionalText: 
+--- !u!114 &114786250639534664
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1329189727847584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00017c6378111b741bab44f0ff92f4ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  componentsToDisable:
+  - {fileID: 114038917414115978}
+  - {fileID: 20248533251560274}
+  - {fileID: 81676126439761654}
+  UIPrefab: {fileID: 1008838259517816, guid: 65c2e4901ea4cdc498e01e7215709928, type: 2}
+  UI: {fileID: 0}
 --- !u!114 &114823902426701884
 MonoBehaviour:
   m_ObjectHideFlags: 1

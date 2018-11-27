@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour {
 	Vector2 input;
 	Transform player;
 
-	PlayerNetworkActions netActions;
+	PlayerActions playerActions;
 
 	// camera reference for rotating to mouse
 	Camera cam;
@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour {
 		cam = transform.GetChild(1).gameObject.GetComponent<Camera>();
 		lastMousePosition = Input.mousePosition;
 		player = transform.GetChild(0);
-		netActions = GetComponent<PlayerNetworkActions>();
+		playerActions = GetComponent<PlayerActions>();
 		MouseRotation();
 	}
 
@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour {
 
 	void FixedUpdate(){
 		if(Input.GetButtonDown("Jump") || Input.GetButtonDown("Fire1"))
-			netActions.AttackToggle();
+			playerActions.AttackToggle();
 
 		if(input != Vector2.zero)
 			transform.Translate (input * moveSpeed *Time.fixedDeltaTime);

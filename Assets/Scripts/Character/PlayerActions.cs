@@ -2,18 +2,10 @@
 using UnityEngine.Networking;
 using System.Collections;
 
-public class PlayerNetworkActions : NetworkBehaviour {
+public class PlayerActions : NetworkBehaviour {
 
-	[SerializeField]
-	Behaviour[] componentsToDisable;
-
-	[SerializeField]
-	GameObject UIPrefab;
-	
-	public GameObject UI;
-
-	// player transform
 	Transform player;
+
 	// attack animation times
 	float windUpTime = 0.1f;
 	float spinTime = 0.1f;
@@ -21,37 +13,16 @@ public class PlayerNetworkActions : NetworkBehaviour {
 
 	// is the player currently attacking?
 	bool attacking = false;
-	// main camera object
-	Camera cam;
 
 	// weapon collider gameobject
 	GameObject weaponCollider;
 
-	// player forward direction at the start of attack
+	// player forward direction at the start of attack/dash
 	Vector3 up;
 
-	void Start(){
-		cam = Camera.main;
-		if(!isLocalPlayer){
-			for(int i = 0; i< componentsToDisable.Length; i++)
-				componentsToDisable[i].enabled = false;
-		} else {
-			GameObject canvas = GameObject.FindGameObjectWithTag("Canvas");
-			UI = Instantiate(UIPrefab, canvas.transform) as GameObject;
-			cam.gameObject.SetActive(false);
-		}
+	void Awake(){
 		player = transform.GetChild(0);
 		weaponCollider = transform.GetChild(0).GetChild(0).GetChild(1).gameObject;
-	}
-
-	void OnDisable(){
-		// Debug.Log("Disabling!");
-		if(isLocalPlayer){
-			if(cam != null)
-				cam.gameObject.SetActive(true);
-			Destroy(UI);
-		}
-		Destroy(this.gameObject);
 	}
 
 	public Vector3 Up{
@@ -108,5 +79,10 @@ public class PlayerNetworkActions : NetworkBehaviour {
 		player.rotation = initial;
 		attacking = false;
 		weaponCollider.SetActive(false);
+	}
+
+	IEnumerator Dash(){
+		// stub
+		yield return null;
 	}
 }
