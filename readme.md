@@ -33,6 +33,7 @@ Project files for a unity multiplayer game implemented using UNet.
 ## Upcoming Features
 - dashing (quick movement)
 - player death/respawning
+- pause menu
 - projectiles
 - recovery items
 - armor (reduces/blocks incoming damage? regenerates?)
@@ -45,6 +46,7 @@ Project files for a unity multiplayer game implemented using UNet.
 
 ### Technical Desirables
 - separation of client/server
+  * look into headless servers, as well as lobby servers
 - implementing observer pattern for UI/other things
   * the way UI is implemented (attached to netmanager) is okay for now, but this would decouple the UI and make it function independently
 - input handling
@@ -63,7 +65,7 @@ Project files for a unity multiplayer game implemented using UNet.
 #### Getting weapon collider/damage to activate across clients
   * solved by creating command/rpc in PlayerSetup, and changing the name to PlayerNetworkActions
 
-#### Getting the forward direction of character as the launch direction of weapons without 
+#### Getting the forward direction of character as the launch direction of weapons
   * This issue is odd because using a syncvar to update the forward direction wasn't working. i'm assuming that's because the PlayerController script is deactivated on non local players, and for whatever reason if a script updates a syncvar on a client but the same script is deactivated on other clients, the syncvar will not update. instead, i made the attack animation enumerator get the up direction in PlayerAction.
 
 #### Making attack animation smoother across clients
