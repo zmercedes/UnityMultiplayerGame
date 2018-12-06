@@ -28,7 +28,7 @@ public class Coord : IEquatable<Coord> {
 		percentX = Mathf.Clamp01(percentX);
 		percentY = Mathf.Clamp01(percentY);
 
-		int x = Mathf.RoundToInt((100 - 1) * percentX);
+		int x = Mathf.RoundToInt((100 -1) * percentX);
 		int y = Mathf.RoundToInt((100 -1) * percentY);
 		return new Coord(x,y);
 	}

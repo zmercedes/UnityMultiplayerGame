@@ -23,7 +23,6 @@ public class PlayerController : MonoBehaviour {
 		MouseRotation();
 	}
 
-	// Update is called once per frame
 	void Update () {
 		if(Input.mousePosition != lastMousePosition){
 
