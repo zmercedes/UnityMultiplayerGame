@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Networking;
+using System.Collections;
 
 public class ServerUp : NetworkBehaviour {
 
@@ -10,9 +9,6 @@ public class ServerUp : NetworkBehaviour {
 	GameObject map;
 
 	public override void OnStartServer(){
-		foreach(Transform child in transform)
-			child.position = Vector3.zero;
-
 		StartCoroutine(UpSequence());
 	}
 
@@ -26,7 +22,7 @@ public class ServerUp : NetworkBehaviour {
 
 		// moves spawn locations within map borders
 		foreach(Transform child in transform){
-			int position = UnityEngine.Random.Range(0,mapGen.WalkableTiles.Count -1);
+			int position = Random.Range(0,mapGen.WalkableTiles.Count -1);
 			child.position = Coord.ToWorldPoint(mapGen.WalkableTiles[position]);
 		}
 		NetworkServer.Spawn(map);

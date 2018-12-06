@@ -7,8 +7,11 @@ public class Coin : NetworkBehaviour {
 	public int RespawnTime = 5;
 
 	void OnTriggerEnter2D(Collider2D col){
-		if (col.tag == "Player") 
+		if (col.tag == "Player"){
+			GetComponent<CircleCollider2D>().enabled = false;
+			transform.GetChild(0).gameObject.SetActive(false);
 			CmdCoinToggle();
+		}
 	}
 
 	// sends command to the server that the coin needs to be turned off/on
@@ -26,8 +29,6 @@ public class Coin : NetworkBehaviour {
 	}
 
 	IEnumerator Respawn(){
-		GetComponent<CircleCollider2D>().enabled = false;
-		transform.GetChild(0).gameObject.SetActive(false);
 		yield return new WaitForSeconds(RespawnTime);
 		GetComponent<CircleCollider2D>().enabled = true;
 		transform.GetChild(0).gameObject.SetActive(true);

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.Networking;
 using System.Collections;
 
@@ -7,9 +7,9 @@ public class PlayerActions : NetworkBehaviour {
 	Transform player;
 
 	// attack animation times
-	float windUpTime = 0.1f;
-	float spinTime = 0.1f;
-	float recoveryTime = 0.2f;
+	float windUpTime = 0.12f;
+	float spinTime = 0.12f;
+	float recoveryTime = 0.25f;
 
 	// is the player currently attacking?
 	bool attacking = false;
@@ -18,6 +18,7 @@ public class PlayerActions : NetworkBehaviour {
 	GameObject weaponCollider;
 
 	// player forward direction at the start of attack/dash
+	[SyncVar]
 	Vector3 up;
 
 	void Awake(){
@@ -52,7 +53,7 @@ public class PlayerActions : NetworkBehaviour {
 		weaponCollider.SetActive(!isLocalPlayer);
 		Quaternion initial = player.rotation;
 		Quaternion from = player.rotation * Quaternion.Euler(transform.forward * 30f);
-		Quaternion to = player.rotation * Quaternion.Euler(transform.forward * -90f);
+		Quaternion to = player.rotation * Quaternion.Euler(transform.forward * -120f);
 
 		float elapsed = 0f;
 
