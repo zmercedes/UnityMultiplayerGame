@@ -9,7 +9,7 @@ Project files for a unity multiplayer game implemented using UNet.
 ### Player
 - PlayerController moves character in 8 directions and rotates to face mouse direction. connects to PlayerActions to activate actions on button presses.
   - WASD/directional keys to move
-  - right click on mouse for attack
+  - left click on mouse for attack
   - space bar for dash
 - PlayerSetup readies prefab by deactivating specific components that all players contain which should only be active on the local player owned prefab. 
 - PlayerActions contains commands for syncing player actions across clients, such as attacking or dashing.
