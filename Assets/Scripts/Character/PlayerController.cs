@@ -37,10 +37,13 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void FixedUpdate(){
-		if(Input.GetButtonDown("Jump") || Input.GetButtonDown("Fire1"))
+		if(Input.GetButtonDown("Fire1"))
 			playerActions.AttackToggle();
 
-		if(input != Vector2.zero)
+		if(Input.GetButtonDown("Jump"))
+			playerActions.DashToggle();
+
+		if(input != Vector2.zero || !playerActions.IsDashing)
 			transform.Translate (input * moveSpeed *Time.fixedDeltaTime);
 	}
 

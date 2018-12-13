@@ -10,9 +10,15 @@ public class PlayerActions : NetworkBehaviour {
 	float windUpTime = 0.12f;
 	float spinTime = 0.12f;
 	float recoveryTime = 0.25f;
-
 	// is the player currently attacking?
-	bool attacking = false;
+	bool isAttacking = false;
+
+	// dash info
+	float dashTime = 0.2f;
+	public float dashDistance = 1.5f;
+
+	// is player currently dashing?
+	bool isDashing = false;
 
 	// weapon collider gameobject
 	GameObject weaponCollider;
@@ -20,6 +26,10 @@ public class PlayerActions : NetworkBehaviour {
 	// player forward direction at the start of attack/dash
 	[SyncVar]
 	Vector3 up;
+
+	[SyncVar]
+	Vector3 start;
+	Vector3 end;
 
 	void Awake(){
 		player = transform.GetChild(0);
@@ -32,8 +42,14 @@ public class PlayerActions : NetworkBehaviour {
 		}
 	}
 
+	public bool IsDashing{
+		get{
+			return isDashing;
+		}
+	}
+
 	public void AttackToggle(){
-		if(!attacking)
+		if(!isAttacking)
 			CmdAttackToggle();
 	}
 
@@ -47,9 +63,26 @@ public class PlayerActions : NetworkBehaviour {
 		StartCoroutine(Attack());
 	}
 
+	public void DashToggle(){
+		if(!isDashing)
+			CmdDashToggle();
+	}
+
+	[Command]
+	void CmdDashToggle(){
+		RpcDashToggle();
+	}
+
+	[ClientRpc]
+	void RpcDashToggle(){
+		StartCoroutine(Dash());
+	}
+
 	IEnumerator Attack(){
-		up = player.up;
-		attacking = true;
+		if(isLocalPlayer)
+			up = player.up;
+
+		isAttacking = true;
 		weaponCollider.SetActive(!isLocalPlayer);
 		Quaternion initial = player.rotation;
 		Quaternion from = player.rotation * Quaternion.Euler(transform.forward * 30f);
@@ -78,12 +111,27 @@ public class PlayerActions : NetworkBehaviour {
 		}
 
 		player.rotation = initial;
-		attacking = false;
+		isAttacking = false;
 		weaponCollider.SetActive(false);
 	}
 
 	IEnumerator Dash(){
-		// stub
+		if(isLocalPlayer){
+			start = transform.position;
+			up = player.up;
+			end = start + up*dashDistance;
+		}
+
+		isDashing = true;
+		float elapsed = 0f;
+
+		while(elapsed < dashTime){
+			transform.position = Vector3.Lerp(start, end, elapsed/dashTime);
+			elapsed += Time.fixedDeltaTime;
+			yield return null;
+		}
+		
+		isDashing = false;
 		yield return null;
 	}
 }
