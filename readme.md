@@ -7,12 +7,14 @@ Project files for a unity multiplayer game implemented using UNet.
 - A user interface is attached to the network manager which hooks to server creation/joining/disconnecting, and player information, such as hp and coin count.
 
 ### Player
-- PlayerController moves character in 8 directions and rotates to face mouse direction. it also has a basic attack animation that plays on click or pressing spacebar.
+- PlayerController moves character in 8 directions and rotates to face mouse direction. connects to PlayerActions to activate actions on button presses.
+  - WASD/directional keys to move
+  - right click on mouse for attack
+  - left click on mouse for dash
 - PlayerSetup readies prefab by deactivating specific components that all players contain which should only be active on the local player owned prefab. 
 - PlayerActions contains commands for syncing player actions across clients, such as attacking or dashing.
 - CharacterInfo is a networkbehaviour that keeps track of player attributes such as health, coins, etc. it also handles displaying this information to the players. localplayers will have a healthbar and coin counter, while remote players display a smaller healthbar beneath them.
 - Uses NetworkTransform and NetworkTransformChild to sync its position on the map.
-- Player can damage other players using their weapon
 
 ### Network
 - Created a custom network manager that handles server creation/joining with a UI. 
@@ -31,7 +33,6 @@ Project files for a unity multiplayer game implemented using UNet.
 - Coins are local player authority, deactivate on trigger, and reactivate after 5 seconds.
 
 ## Upcoming Features
-- dashing (quick movement)
 - player death/respawning
 - pause menu
 - projectiles
