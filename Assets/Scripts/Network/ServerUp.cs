@@ -1,12 +1,21 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
 using System.Collections;
+using System.Collections.Generic;
 
 public class ServerUp : NetworkBehaviour {
 
 	public GameObject MapPrefab;
-	public Collectables collectables;
 	GameObject map;
+
+	[SerializeField]
+	GameObject collectablePrefab;
+
+	GameObject collectable;
+
+	// how many coins? 
+	[SerializeField]
+	int numberOfCollectables;
 
 	public override void OnStartServer(){
 		StartCoroutine(UpSequence());
@@ -20,15 +29,32 @@ public class ServerUp : NetworkBehaviour {
 		while(!mapGen.Ready)
 			yield return null;
 
+		HashSet<Coord> occupied = new HashSet<Coord>();
 		// moves spawn locations within map borders
 		foreach(Transform child in transform){
 			int position = Random.Range(0,mapGen.WalkableTiles.Count -1);
-			child.position = Coord.ToWorldPoint(mapGen.WalkableTiles[position]);
-		}
-		NetworkServer.Spawn(map);
+			while(occupied.Contains(mapGen.WalkableTiles[position]))
+				position = Random.Range(0,mapGen.WalkableTiles.Count -1);
 
-		// send in walkable tiles to generate collectibles inside the map
-		collectables.GenerateCollectables(mapGen.WalkableTiles);
+			child.position = Coord.ToWorldPoint(mapGen.WalkableTiles[position]);
+			occupied.Add(mapGen.WalkableTiles[position]);
+		}
+
+		// initializing coins
+		for (int i = 0; i <numberOfCollectables; i ++){
+			int randomTile = Random.Range(0, mapGen.WalkableTiles.Count -1);
+
+			while(occupied.Contains(mapGen.WalkableTiles[randomTile]))
+				randomTile = Random.Range(0, mapGen.WalkableTiles.Count-1);
+			
+			Vector3 position = Coord.ToWorldPoint(mapGen.WalkableTiles[randomTile]);
+			collectable = Instantiate (collectablePrefab, position, Quaternion.identity, transform); 
+			occupied.Add(mapGen.WalkableTiles[randomTile]);
+			// spawn coin across all clients
+			NetworkServer.Spawn(collectable);
+		}
+
+		NetworkServer.Spawn(map);
 		yield return null;
 	}
 }

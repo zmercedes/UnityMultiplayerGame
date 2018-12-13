@@ -609,7 +609,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MapPrefab: {fileID: 1928543052786108, guid: d78854333d4dfe94cb6485f2e3983930, type: 2}
-  collectables: {fileID: 1518547086}
+  collectablePrefab: {fileID: 1045139255334632, guid: 798bb7a25f77e6a48b86ea700e0ed3ec,
+    type: 2}
+  numberOfCollectables: 25
 --- !u!4 &1392653005
 Transform:
   m_ObjectHideFlags: 0
@@ -833,8 +835,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1518547087}
-  - component: {fileID: 1518547086}
-  - component: {fileID: 1518547085}
   m_Layer: 0
   m_Name: Collectables
   m_TagString: Untagged
@@ -842,54 +842,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1518547085
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114813836915244150, guid: 7f782990ae35c9442856d50e70a2554b,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1518547084}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SceneId:
-    m_Value: 0
-  m_AssetId:
-    i0: 0
-    i1: 0
-    i2: 0
-    i3: 0
-    i4: 0
-    i5: 0
-    i6: 0
-    i7: 0
-    i8: 0
-    i9: 0
-    i10: 0
-    i11: 0
-    i12: 0
-    i13: 0
-    i14: 0
-    i15: 0
-  m_ServerOnly: 1
-  m_LocalPlayerAuthority: 0
---- !u!114 &1518547086
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114627025335652204, guid: 7f782990ae35c9442856d50e70a2554b,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1518547084}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d100778caedac84fa65d04ea146a3ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  collectablePrefab: {fileID: 1045139255334632, guid: 798bb7a25f77e6a48b86ea700e0ed3ec,
-    type: 2}
-  numberOfCollectables: 25
 --- !u!4 &1518547087
 Transform:
   m_ObjectHideFlags: 0
