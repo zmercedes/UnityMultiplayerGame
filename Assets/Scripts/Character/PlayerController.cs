@@ -42,8 +42,8 @@ public class PlayerController : MonoBehaviour {
 
 		if(Input.GetButtonDown("Jump"))
 			playerActions.DashToggle();
-
-		if(input != Vector2.zero || !playerActions.IsDashing)
+		
+		if(input != Vector2.zero && !playerActions.IsDashing)
 			transform.Translate (input * moveSpeed *Time.fixedDeltaTime);
 	}
 

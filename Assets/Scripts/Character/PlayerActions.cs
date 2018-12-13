@@ -5,6 +5,7 @@ using System.Collections;
 public class PlayerActions : NetworkBehaviour {
 
 	Transform player;
+	Rigidbody2D rb;
 
 	// attack animation times
 	float windUpTime = 0.12f;
@@ -15,7 +16,8 @@ public class PlayerActions : NetworkBehaviour {
 
 	// dash info
 	float dashTime = 0.2f;
-	public float dashDistance = 1.5f;
+	Vector3 dashVelocity;
+	public float dashSpeed = 25f;
 
 	// is player currently dashing?
 	bool isDashing = false;
@@ -27,12 +29,9 @@ public class PlayerActions : NetworkBehaviour {
 	[SyncVar]
 	Vector3 up;
 
-	[SyncVar]
-	Vector3 start;
-	Vector3 end;
-
 	void Awake(){
 		player = transform.GetChild(0);
+		rb = GetComponent<Rigidbody2D>();
 		weaponCollider = transform.GetChild(0).GetChild(0).GetChild(1).gameObject;
 	}
 
@@ -41,6 +40,7 @@ public class PlayerActions : NetworkBehaviour {
 			return up;
 		}
 	}
+
 
 	public bool IsDashing{
 		get{
@@ -117,19 +117,22 @@ public class PlayerActions : NetworkBehaviour {
 
 	IEnumerator Dash(){
 		if(isLocalPlayer){
-			start = transform.position;
 			up = player.up;
-			end = start + up*dashDistance;
+			dashVelocity = up * dashSpeed;
 		}
 
 		isDashing = true;
 		float elapsed = 0f;
 
+		Vector3 initial = rb.velocity;
+
 		while(elapsed < dashTime){
-			transform.position = Vector3.Lerp(start, end, elapsed/dashTime);
-			elapsed += Time.fixedDeltaTime;
+			rb.velocity = dashVelocity;
+			elapsed += Time.deltaTime;
 			yield return null;
 		}
+
+		rb.velocity = Vector3.zero;
 		
 		isDashing = false;
 		yield return null;
