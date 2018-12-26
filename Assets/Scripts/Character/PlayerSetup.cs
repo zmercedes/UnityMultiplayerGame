@@ -5,11 +5,7 @@ public class PlayerSetup : NetworkBehaviour {
 
 	[SerializeField]
 	Behaviour[] componentsToDisable;
-
-	[SerializeField]
-	GameObject UIPrefab;
 	
-	public GameObject UI;
 	// main camera object
 	Camera cam;
 
@@ -18,11 +14,8 @@ public class PlayerSetup : NetworkBehaviour {
 		if(!isLocalPlayer){
 			for(int i = 0; i< componentsToDisable.Length; i++)
 				componentsToDisable[i].enabled = false;
-		} else {
-			GameObject canvas = GameObject.FindGameObjectWithTag("Canvas");
-			UI = Instantiate(UIPrefab, canvas.transform) as GameObject;
+		} else 
 			cam.gameObject.SetActive(false);
-		}
 	}
 
 	void OnDisable(){
@@ -30,7 +23,6 @@ public class PlayerSetup : NetworkBehaviour {
 		if(isLocalPlayer){
 			if(cam != null)
 				cam.gameObject.SetActive(true);
-			Destroy(UI);
 		}
 		Destroy(this.gameObject);
 	}
