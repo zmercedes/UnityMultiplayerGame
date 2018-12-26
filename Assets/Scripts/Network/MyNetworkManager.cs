@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
@@ -6,8 +7,9 @@ using UnityEngine.SceneManagement;
 
 public class MyNetworkManager : NetworkManager {
 
-	GameObject title,menu,loadText,disconnectButton,cancelButton;
-
+	public event Action clientConnected;
+	public event Action clientDisconnected;
+	
 	void Awake(){
 		// destroys networkmanager if one is already active
 		// when entering offline scene
@@ -15,11 +17,6 @@ public class MyNetworkManager : NetworkManager {
 			Destroy(gameObject);
 
 		Application.targetFrameRate = 60; // possibly does not belong here
-		title = transform.GetChild(0).GetChild(0).gameObject;
-		menu = transform.GetChild(0).GetChild(1).gameObject;
-		loadText = transform.GetChild(0).GetChild(2).gameObject;
-		disconnectButton = transform.GetChild(0).GetChild(3).gameObject;
-		cancelButton = transform.GetChild(0).GetChild(4).gameObject;
 	}
 	
 	public override void OnClientConnect(NetworkConnection conn){
@@ -27,9 +24,7 @@ public class MyNetworkManager : NetworkManager {
 	}
 
 	public override void OnClientDisconnect(NetworkConnection conn){
-		disconnectButton.SetActive(false);
-		title.SetActive(true);
-		menu.SetActive(true);
+		clientDisconnected();
 	}
 
 	IEnumerator ClientSpawn(NetworkConnection conn){
@@ -50,25 +45,18 @@ public class MyNetworkManager : NetworkManager {
 		// can display character select screen here?
 		
 		ClientScene.AddPlayer(conn, 0);
-		title.SetActive(false);
-		loadText.SetActive(false);
-		cancelButton.SetActive(false);
-		disconnectButton.SetActive(true);
+		clientConnected();
 		yield return null;
 	}
 
-	public void StartServerButton(){
-		menu.SetActive(false);
-		loadText.SetActive(true);
+	public void StartingServer(){
+		// StartingServer UI update
 		networkAddress = "localhost";
 		StartHost();
 	}
 
-	public void JoinServerButton(Text ipText){
-		menu.SetActive(false);
-		loadText.SetActive(true);
-		cancelButton.SetActive(true);
-
+	public void JoinServer(Text ipText){
+		
 		if(ipText.text != "")
 			networkAddress = ipText.text;
 		else
@@ -77,21 +65,14 @@ public class MyNetworkManager : NetworkManager {
 		StartClient();
 	}
 
-	public void DisconnectButton(){
+	public void Disconnect(){
 		StopHost();
 		if(!IsClientConnected())
 			StopServer();
 
-		disconnectButton.SetActive(false);
-		title.SetActive(true);
-		menu.SetActive(true);
 	}
 
-	public void CancelButton(){
-		cancelButton.SetActive(false);
-		loadText.SetActive(false);
-		menu.SetActive(true);
-
+	public void Cancel(){
 		StopClient();
 	}
 }

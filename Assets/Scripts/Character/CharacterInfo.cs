@@ -7,30 +7,38 @@ public class CharacterInfo : NetworkBehaviour {
 	
 	SimpleHealthBar healthBar;
 
-	GameObject UI;
+	GameObject InfoUI;
+	GameObject DeathUI;
 
 	Text coinText;
+	Text healthText;
 
 	int coinCounter=0;
 	int health;
 
-	void Start (){
+	void Start(){
 		if(isLocalPlayer){
-			UI = GetComponent<PlayerSetup>().UI;
-			coinText = UI.transform.GetChild(1).GetComponent<Text>();
-			healthBar = UI.transform.GetChild(2).GetChild(0).gameObject.GetComponent<SimpleHealthBar>();
+			GameObject canvas = GameObject.FindGameObjectWithTag("Canvas");
+			InfoUI = canvas.transform.GetChild(5).gameObject;
+			coinText = InfoUI.transform.GetChild(1).GetComponent<Text>();
+			healthBar = InfoUI.transform.GetChild(2).GetChild(0).gameObject.GetComponent<SimpleHealthBar>();
+			healthText = InfoUI.transform.GetChild(3).GetComponent<Text>();
 		} else {
 			healthBar = transform.GetChild(2).GetChild(0).GetChild(0).gameObject.GetComponent<SimpleHealthBar>();
 			transform.GetChild(2).gameObject.SetActive(true);
 		}
 
 		health = maxHealth;
+		healthText.text = health.ToString() + " / " + maxHealth.ToString();
+		InfoUI.SetActive(true);
 	}
 
 	void DecreaseHealth (int number){
 		health -= number;
-		if (health < 0)
+		if (health <= 0){
 			health = 0;
+			OnDeath();
+		}
 
 		healthBar.UpdateBar( health, maxHealth );
 	}
@@ -71,6 +79,16 @@ public class CharacterInfo : NetworkBehaviour {
 	[ClientRpc]
 	void RpcHealthIncrease(int number){
 		IncreaseHealth(number);
+	}
+
+	// calls death ui screen
+	void OnDeath(){
+		// call death ui and deactivate movement
+		// maybe set tombstone in the place player died
+		if(isLocalPlayer){
+			GetComponent<PlayerController>().enabled = false;
+			DeathUI.SetActive(true);
+		}
 	}
 
 	void OnTriggerEnter2D(Collider2D col){
