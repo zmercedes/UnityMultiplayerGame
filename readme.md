@@ -4,9 +4,10 @@ Project files for a unity multiplayer game implemented using UNet.
 
 ## Features
 ### UI
-- A user interface is attached to the network manager which hooks to server creation/joining/disconnecting, and player information, such as hp and coin count.
+- The user interface hooks to server creation/joining/disconnecting, and player information, such as hp and coin count.
 
 ### Player
+- Player controls a character which can engage in combat and die.
 - PlayerController moves character in 8 directions and rotates to face mouse direction. connects to PlayerActions to activate actions on button presses.
   - WASD/directional keys to move
   - left click on mouse for attack
@@ -33,12 +34,12 @@ Project files for a unity multiplayer game implemented using UNet.
 - Coins are local player authority, deactivate on trigger, and reactivate after 5 seconds.
 
 ## Upcoming Features
-- player death/respawning
+- player respawning
+- multiple combat classes to choose from
 - pause menu
 - projectiles
 - recovery items
 - armor (reduces/blocks incoming damage? regenerates?)
-- multiple combat classes to choose from
 - weapon/armor upgrades
 - enemy npcs?
 - game modes (ffa, coop level progression, etc)
@@ -48,8 +49,6 @@ Project files for a unity multiplayer game implemented using UNet.
 ### Technical Desirables
 - separation of client/server
   * look into headless servers, as well as lobby servers
-- implementing observer pattern for UI/other things
-  * the way UI is implemented (attached to netmanager) is okay for now, but this would decouple the UI and make it function independently
 - input handling
 - error handling (handling disconnection and other errors)
 

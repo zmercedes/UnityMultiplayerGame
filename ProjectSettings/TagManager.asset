@@ -6,9 +6,9 @@ TagManager:
   tags:
   - Collect
   - Canvas
-  - ServerUp
   - NetManager
   - Map
+  - Arrow
   layers:
   - Default
   - TransparentFX
