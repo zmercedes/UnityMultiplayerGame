@@ -1,5 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class UIController : MonoBehaviour {
@@ -40,21 +40,15 @@ public class UIController : MonoBehaviour {
 	public void StartServerButton(){
 		menu.SetActive(false);
 		loadText.SetActive(true);
-
-		// start server
 	}
 
 	public void JoinServerButton(){
 		menu.SetActive(false);
 		loadText.SetActive(true);
 		cancelButton.SetActive(true);
-
-		// join server
 	}
 
 	public void DisconnectButton(){
-		// disconnect 
-
 		disconnectButton.SetActive(false);
 		title.SetActive(true);
 		menu.SetActive(true);
@@ -64,9 +58,5 @@ public class UIController : MonoBehaviour {
 		cancelButton.SetActive(false);
 		loadText.SetActive(false);
 		menu.SetActive(true);
-
-		// cancel
 	}
-
-
 }

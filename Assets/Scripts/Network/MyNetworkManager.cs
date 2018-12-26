@@ -9,6 +9,7 @@ public class MyNetworkManager : NetworkManager {
 
 	public event Action clientConnected;
 	public event Action clientDisconnected;
+	
 	void Awake(){
 		// destroys networkmanager if one is already active
 		// when entering offline scene
