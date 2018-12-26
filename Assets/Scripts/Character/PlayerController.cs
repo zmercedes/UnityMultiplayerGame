@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour {
 	Vector2 input;
 	Transform player;
 
-	PlayerActions playerActions;
+	UnitActions unitActions;
 
 	// camera reference for rotating to mouse
 	Camera cam;
@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour {
 		cam = transform.GetChild(1).gameObject.GetComponent<Camera>();
 		lastMousePosition = Input.mousePosition;
 		player = transform.GetChild(0);
-		playerActions = GetComponent<PlayerActions>();
+		unitActions = GetComponent<UnitActions>();
 		MouseRotation();
 	}
 
@@ -34,16 +34,16 @@ public class PlayerController : MonoBehaviour {
 		input = new Vector2(Input.GetAxisRaw("Horizontal"),Input.GetAxisRaw("Vertical"));
 
 		input = input.normalized;
+
+		if(Input.GetButtonDown("Fire1"))
+			unitActions.AttackToggle();
+
+		if(Input.GetButtonDown("Jump"))
+			unitActions.DashToggle();
 	}
 
 	void FixedUpdate(){
-		if(Input.GetButtonDown("Fire1"))
-			playerActions.AttackToggle();
-
-		if(Input.GetButtonDown("Jump"))
-			playerActions.DashToggle();
-		
-		if(input != Vector2.zero && !playerActions.IsDashing)
+		if(input != Vector2.zero && !unitActions.IsDashing)
 			transform.Translate (input * moveSpeed *Time.fixedDeltaTime);
 	}
 

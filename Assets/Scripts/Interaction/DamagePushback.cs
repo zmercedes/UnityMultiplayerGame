@@ -16,7 +16,7 @@ public class DamagePushback : MonoBehaviour {
 				
 				direction = transform.up;
 				if(gameObject.layer == 8)
-					direction = transform.parent.parent.parent.gameObject.GetComponent<PlayerActions>().Up;
+					direction = transform.parent.parent.parent.gameObject.GetComponent<UnitActions>().Up;
 				
 				rb.velocity = direction * pushBackValue;
 				otherPlayer.HealthDecrease(damageValue);
