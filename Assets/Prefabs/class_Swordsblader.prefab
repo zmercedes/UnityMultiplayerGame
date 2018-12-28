@@ -676,8 +676,6 @@ MonoBehaviour:
   - {fileID: 114038917414115978}
   - {fileID: 20248533251560274}
   - {fileID: 81676126439761654}
-  UIPrefab: {fileID: 1008838259517816, guid: 65c2e4901ea4cdc498e01e7215709928, type: 2}
-  UI: {fileID: 0}
 --- !u!114 &114823902426701884
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -690,7 +688,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 20
-  DeathUI: {fileID: 1307694411242996, guid: 66ce1328b59bd96418e60862b62711f2, type: 2}
 --- !u!114 &114985458177632444
 MonoBehaviour:
   m_ObjectHideFlags: 1

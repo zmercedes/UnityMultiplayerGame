@@ -20,6 +20,7 @@ public class CharacterInfo : NetworkBehaviour {
 		if(isLocalPlayer){
 			GameObject canvas = GameObject.FindGameObjectWithTag("Canvas");
 			InfoUI = canvas.transform.GetChild(5).gameObject;
+			DeathUI = canvas.transform.GetChild(6).gameObject;
 			coinText = InfoUI.transform.GetChild(1).GetComponent<Text>();
 			healthBar = InfoUI.transform.GetChild(2).GetChild(0).gameObject.GetComponent<SimpleHealthBar>();
 			healthText = InfoUI.transform.GetChild(3).GetComponent<Text>();
