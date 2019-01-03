@@ -7,7 +7,7 @@ public class ArcherActions : UnitActions {
 	[SerializeField]
 	GameObject arrow;
 	[SerializeField]
-	float arrowSpeed = 25f;
+	float arrowSpeed = 20f;
 
 	ObjectPool pool;
 	Vector3 arrowPosition;
@@ -15,7 +15,7 @@ public class ArcherActions : UnitActions {
 	public override void Awake() {
 		base.Awake();
 
-		pool = new ObjectPool(arrow, 20);
+		pool = new ObjectPool(arrow, 10);
 	}
 
 	public override IEnumerator Attack(){
@@ -32,6 +32,7 @@ public class ArcherActions : UnitActions {
 
 		currentArrow.GetComponent<Rigidbody2D>().velocity = up * arrowSpeed;
 
+		yield return new WaitForSeconds(1f);
 		isAttacking = false;
 		yield return null;
 	}

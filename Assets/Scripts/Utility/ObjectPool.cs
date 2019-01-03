@@ -12,8 +12,8 @@ public class ObjectPool {
 		maxNumOfObjects = max;
 		pool = new List<GameObject>();
 		for(int i = 0; i < maxNumOfObjects; i++){
-			GameObject tmp = GameObject.Instantiate(obj);
-			pool.Add(tmp);
+			GameObject newObj = GameObject.Instantiate(obj);
+			pool.Add(newObj);
 		}
 	}
 
