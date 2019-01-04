@@ -23,6 +23,9 @@ public class UnitActions : NetworkBehaviour {
 	protected Vector3 up;
 
 	public virtual void Awake(){
+		if(isLocalPlayer)
+			gameObject.name = "Local";
+		
 		player = transform.GetChild(0);
 		rb = GetComponent<Rigidbody2D>();
 	}
