@@ -22,8 +22,10 @@ public class CharacterInfo : NetworkBehaviour {
 			InfoUI = canvas.transform.GetChild(5).gameObject;
 			DeathUI = canvas.transform.GetChild(6).gameObject;
 			coinText = InfoUI.transform.GetChild(1).GetComponent<Text>();
+			coinText.text = "Coins: 0";
 			healthBar = InfoUI.transform.GetChild(2).GetChild(0).gameObject.GetComponent<SimpleHealthBar>();
 			healthText = InfoUI.transform.GetChild(3).GetComponent<Text>();
+		
 		} else {
 			healthBar = transform.GetChild(2).GetChild(0).GetChild(0).gameObject.GetComponent<SimpleHealthBar>();
 			transform.GetChild(2).gameObject.SetActive(true);
@@ -31,6 +33,7 @@ public class CharacterInfo : NetworkBehaviour {
 
 		health = maxHealth;
 		healthText.text = health.ToString() + " / " + maxHealth.ToString();
+		healthBar.UpdateBar(health, maxHealth);
 		InfoUI.SetActive(true);
 	}
 
@@ -41,7 +44,7 @@ public class CharacterInfo : NetworkBehaviour {
 			OnDeath();
 		}
 
-		healthBar.UpdateBar( health, maxHealth );
+		healthBar.UpdateBar(health, maxHealth);
 	}
 
 	void IncreaseHealth (int number){
@@ -49,7 +52,7 @@ public class CharacterInfo : NetworkBehaviour {
 		if (health > maxHealth)
 			health = maxHealth;
 
-		healthBar.UpdateBar( health, maxHealth );
+		healthBar.UpdateBar(health, maxHealth);
 	}
 
 	// health decrease functions
