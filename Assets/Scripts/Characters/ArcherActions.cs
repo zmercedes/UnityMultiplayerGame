@@ -15,7 +15,7 @@ public class ArcherActions : UnitActions {
 	public override void Awake() {
 		base.Awake();
 
-		pool = new ObjectPool(arrow, 10);
+		pool = new ObjectPool(arrow, 10, transform);
 	}
 
 	public override IEnumerator Attack(){
@@ -35,5 +35,9 @@ public class ArcherActions : UnitActions {
 		yield return new WaitForSeconds(1f);
 		isAttacking = false;
 		yield return null;
+	}
+
+	void OnDisable(){
+		pool = null;
 	}
 }
