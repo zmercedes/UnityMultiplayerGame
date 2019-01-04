@@ -22,7 +22,7 @@ public class UnitActions : NetworkBehaviour {
 	[SyncVar]
 	protected Vector3 up;
 
-	public virtual void Awake(){
+	public virtual void Awake(){		
 		player = transform.GetChild(0);
 		rb = GetComponent<Rigidbody2D>();
 	}
@@ -94,5 +94,15 @@ public class UnitActions : NetworkBehaviour {
 		
 		isDashing = false;
 		yield return null;
+	}
+
+	[Command]
+	public void CmdRespawn(){
+		NetworkManager netManager = NetworkManager.singleton;
+		Transform respawnPoint = netManager.GetStartPosition();
+		// NetworkIdentity playerID =  GetComponent<NetworkIdentity>();
+		NetworkServer.Destroy(gameObject);
+		GameObject newPlayer = GameObject.Instantiate(netManager.playerPrefab, respawnPoint.position, respawnPoint.rotation);
+		NetworkServer.ReplacePlayerForConnection(this.connectionToClient, newPlayer, this.playerControllerId);
 	}
 }

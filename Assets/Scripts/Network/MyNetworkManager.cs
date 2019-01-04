@@ -46,6 +46,7 @@ public class MyNetworkManager : NetworkManager {
 		
 		ClientScene.AddPlayer(conn, 0);
 		clientConnected();
+
 		yield return null;
 	}
 
