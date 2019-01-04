@@ -1,17 +1,4 @@
-﻿/* Biome
- * Zoilo Mercedes
- * Handles map generation rules.
- * Observations:
- * - automata rule only works at 4 and 5. 
- * - 4 has good shapes with fill % 45 - 54 and produces better 
- *     cave shapes, as well as islands.
- * - 5 has good shapes with fill % 70 - 85. 
- * - A lower room threshold will produce more pathways being 
- *     created. More labyrinth shapes at higher fill %
- * - Can turn islands off/on by setting high wall threshold
- */
-
-using UnityEngine;
+﻿using UnityEngine;
 
 [System.Serializable]
 public class Biome {
@@ -20,10 +7,10 @@ public class Biome {
 	public int height = 80;            // map height
 	public int smoothingIterations = 5; // # of smoothing iterations
 	[Range(0,100)]
-	public int randomFillPercent = 50;  // percent to fill map with
-	public int automataRule = 4;        // number of adjacent wall tiles
+	public int randomFillPercent = 73;  // percent to fill map with
+	public int automataRule = 5;        // number of adjacent wall tiles
 	                                    // used in cell automata 
-	public int wallThreshold = 10;      // wall tile island must be > to remain
+	public int wallThreshold = 50;      // wall tile island must be > to remain
 	public int roomThreshold = 50;      // room must be > to remain
 	public int totalX = 1;              // used in automata to check 2x + 1 neighbors
 	public int totalY = 1;              // used in automata to check 2y + 1 neighbors
