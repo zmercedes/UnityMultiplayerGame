@@ -14,8 +14,10 @@ public class PlayerSetup : NetworkBehaviour {
 		if(!isLocalPlayer){
 			for(int i = 0; i< componentsToDisable.Length; i++)
 				componentsToDisable[i].enabled = false;
-		} else 
+		} else {
+			gameObject.name = "Local";
 			cam.gameObject.SetActive(false);
+		}
 	}
 
 	void OnDisable(){

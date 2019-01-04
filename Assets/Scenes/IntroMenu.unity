@@ -1186,16 +1186,51 @@ Prefab:
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1239027221}
+      objectReference: {fileID: 56557737}
     - target: {fileID: 114443052521642264, guid: 66ce1328b59bd96418e60862b62711f2,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Respawn
+      value: RespawnButton
       objectReference: {fileID: 0}
     - target: {fileID: 114443052521642264, guid: 66ce1328b59bd96418e60862b62711f2,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 114443052521642264, guid: 66ce1328b59bd96418e60862b62711f2,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 56557737}
+    - target: {fileID: 114443052521642264, guid: 66ce1328b59bd96418e60862b62711f2,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: RespawnButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 114443052521642264, guid: 66ce1328b59bd96418e60862b62711f2,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 114443052521642264, guid: 66ce1328b59bd96418e60862b62711f2,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114443052521642264, guid: 66ce1328b59bd96418e60862b62711f2,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114443052521642264, guid: 66ce1328b59bd96418e60862b62711f2,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114443052521642264, guid: 66ce1328b59bd96418e60862b62711f2,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 66ce1328b59bd96418e60862b62711f2, type: 2}
@@ -1469,8 +1504,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1239027221}
-        m_MethodName: Respawn
+      - m_Target: {fileID: 56557737}
+        m_MethodName: RespawnButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

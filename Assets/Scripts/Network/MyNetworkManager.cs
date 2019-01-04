@@ -7,8 +7,6 @@ using UnityEngine.SceneManagement;
 
 public class MyNetworkManager : NetworkManager {
 
-	GameObject localPlayer;
-
 	public event Action clientConnected;
 	public event Action clientDisconnected;
 	
@@ -48,7 +46,7 @@ public class MyNetworkManager : NetworkManager {
 		
 		ClientScene.AddPlayer(conn, 0);
 		clientConnected();
-		localPlayer = GameObject.Find("Local");
+
 		yield return null;
 	}
 
@@ -77,12 +75,5 @@ public class MyNetworkManager : NetworkManager {
 
 	public void Cancel(){
 		StopClient();
-	}
-
-	public void Respawn(){
-		Transform respawnPoint = GetStartPosition();
-		NetworkServer.UnSpawn(localPlayer);
-		localPlayer.transform.position = respawnPoint.position;
-		NetworkServer.Spawn(localPlayer);
 	}
 }
