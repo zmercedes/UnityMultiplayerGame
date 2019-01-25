@@ -58,10 +58,7 @@ public class MyNetworkManager : NetworkManager {
 
 	public void JoinServer(Text ipText){
 		
-		if(ipText.text != "")
-			networkAddress = ipText.text;
-		else
-			networkAddress = "localhost";
+		networkAddress = ipText.text != "" ? ipText.text : "localhost";
 
 		StartClient();
 	}

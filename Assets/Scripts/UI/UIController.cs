@@ -64,9 +64,9 @@ public class UIController : MonoBehaviour {
 
 	public void RespawnButton(){
 		GameObject player = GameObject.Find("Local");
-		while(player == null){
+		while(player == null)
 			player = GameObject.Find("Local");
-		}
+		
 		player.GetComponent<UnitActions>().CmdRespawn();
 		death.SetActive(false);
 	}

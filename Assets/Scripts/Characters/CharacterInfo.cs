@@ -25,7 +25,6 @@ public class CharacterInfo : NetworkBehaviour {
 			coinText.text = "Coins: 0";
 			healthBar = InfoUI.transform.GetChild(2).GetChild(0).gameObject.GetComponent<SimpleHealthBar>();
 			healthText = InfoUI.transform.GetChild(3).GetComponent<Text>();
-		
 		} else {
 			healthBar = transform.GetChild(2).GetChild(0).GetChild(0).gameObject.GetComponent<SimpleHealthBar>();
 			transform.GetChild(2).gameObject.SetActive(true);
