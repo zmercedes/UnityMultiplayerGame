@@ -24,8 +24,6 @@ public class DamagePushback : MonoBehaviour {
 				Physics2D.IgnoreCollision(other.GetComponent<Collider2D>(), GetComponent<Collider2D>());
 			}
 		}
-		if(gameObject.tag == "Arrow" && other.gameObject.tag != "Collect")
-			gameObject.SetActive(false);
 	}
 
 	IEnumerator PushBackLerp(Rigidbody2D rb){
