@@ -50,16 +50,11 @@ Project files for a unity multiplayer game implemented using UNet.
 ### Technical Desirables
 - separation of client/server
   * look into headless servers, as well as lobby servers
-- error handling (handling disconnection and other errors)
 - default UI states
-- more robust player joining/leaving mechanisms (less error throwing when a player disconnects/leaves abruptly/is disconnected)
 
 ## Issues
 #### Getting player/coins to spawn after map has established reachable locations.
-- solved by implementing a client startup coroutine which waits on the server to be finished generating the map. The client has to wait on several things to happen before it can spawn in a player. As such, this coroutine has 3 steps:
-  1. wait on scene load. Scene will change on connecting to the server, so client waits until the online scene is loaded.
-  2. wait on map spawn. Map is spawned from the server and the client must wait to receive it.
-  3. generate player/coins/modify UI. 
+- solved by implementing a client startup coroutine which waits on the server to be finished generating the map. The client is made to wait on several things before it can spawn in a player. 
 
 #### Since the network manager is not destroyed on load, when a player disconnects, they load the offline scene which contains a new copy of the network manager. There must only be one network manager active at a time.
   * solved by adding a check in networkmanager.Awake() which causes copies to self destruct when more than one exists.
