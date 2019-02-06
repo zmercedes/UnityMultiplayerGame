@@ -7,14 +7,12 @@ using UnityEngine.SceneManagement;
 
 public class MyNetworkManager : NetworkManager {
 
-	public event Action clientConnected;
-	public event Action clientDisconnected;
-	public event Action showCharacterSelect;
-
 	public GameObject[] classes;
 
 	ClassMessage classMessage;
 	bool classSelected = false;
+
+	UIController ui;
 	
 	void Awake(){
 		// destroys networkmanager if one is already active
@@ -22,6 +20,7 @@ public class MyNetworkManager : NetworkManager {
 		if (FindObjectsOfType(GetType()).Length > 1)
 			Destroy(gameObject);
 
+		ui = GameObject.FindGameObjectWithTag("Canvas").GetComponent<UIController>();
 		Application.targetFrameRate = 60; // possibly does not belong here
 	}
 
@@ -49,7 +48,11 @@ public class MyNetworkManager : NetworkManager {
 	}
 
 	public override void OnClientDisconnect(NetworkConnection conn){
-		clientDisconnected();
+		ui.DefaultState();
+	}
+
+	public override void OnServerDisconnect(NetworkConnection conn){
+		NetworkServer.DestroyPlayersForConnection(conn);
 	}
 
 	IEnumerator ClientSpawn(NetworkConnection conn){
@@ -68,13 +71,13 @@ public class MyNetworkManager : NetworkManager {
 			yield return null;
 		}
 
-		// can display character select screen here?
-		showCharacterSelect();
+		ui.CharacterSelect();
+
 		while(!classSelected)
 			yield return null;
 
 		ClientScene.AddPlayer(conn, 0, classMessage);
-		clientConnected();
+		ui.ClientConnected();
 
 		yield return null;
 	}
@@ -94,6 +97,7 @@ public class MyNetworkManager : NetworkManager {
 
 	public void Disconnect(){
 		StopHost();
+		classSelected = false;
 		if(!IsClientConnected())
 			StopServer();
 

@@ -6,45 +6,46 @@ public class UIController : MonoBehaviour {
 
 	// delegates
 
-	GameObject title,menu,loadText,disconnectButton,cancelButton,characterSelect,death;
+	GameObject title,menu,loadText,disconnectButton,cancelButton,info,death,characterSelect;
 
 	void Awake() {
 		if (FindObjectsOfType(GetType()).Length > 1)
 			Destroy(gameObject);
 
 		DontDestroyOnLoad(gameObject);
-		MyNetworkManager netManager = GameObject.FindGameObjectWithTag("NetManager").GetComponent<MyNetworkManager>();
-		netManager.clientConnected += ClientConnected;
-		netManager.clientDisconnected += ClientDisconnected;
-		netManager.showCharacterSelect += CharacterSelect;
 
 		title = transform.GetChild(0).gameObject;
 		menu = transform.GetChild(1).gameObject;
 		loadText = transform.GetChild(2).gameObject;
 		disconnectButton = transform.GetChild(3).gameObject;
 		cancelButton = transform.GetChild(4).gameObject;
+		info = transform.GetChild(5).gameObject;
 		death = transform.GetChild(6).gameObject;
 		characterSelect = transform.GetChild(7).gameObject;
-		
 	}
 	
-	void ClientConnected(){
+	public void ClientConnected(){
 		title.SetActive(false);
 		loadText.SetActive(false);
 		cancelButton.SetActive(false);
 		disconnectButton.SetActive(true);
 	}
 
-	void ClientDisconnected(){
-		disconnectButton.SetActive(false);
-		title.SetActive(true);
-		menu.SetActive(true);
-	}
-
-	void CharacterSelect(){
+	public void CharacterSelect(){
 		title.SetActive(false);
 		loadText.SetActive(false);
 		characterSelect.SetActive(true);
+	}
+
+	public void DefaultState(){
+		title.SetActive(true);
+		menu.SetActive(true);
+		loadText.SetActive(false);
+		disconnectButton.SetActive(false);
+		cancelButton.SetActive(false);
+		info.SetActive(false);
+		death.SetActive(false);
+		characterSelect.SetActive(false);
 	}
 
 	public void CloseCharacterSelect(){
@@ -66,6 +67,7 @@ public class UIController : MonoBehaviour {
 
 	public void DisconnectButton(){
 		disconnectButton.SetActive(false);
+		info.SetActive(false);
 		title.SetActive(true);
 		menu.SetActive(true);
 	}
