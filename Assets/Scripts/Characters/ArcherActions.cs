@@ -21,14 +21,13 @@ public class ArcherActions : UnitActions {
 	public override IEnumerator Attack(){
 		isAttacking = true;
 		arrowPosition = player.GetChild(0).GetChild(1).position;
-		up = player.up;
 		
 		GameObject currentArrow = pool.Next();
 		Physics2D.IgnoreCollision(currentArrow.GetComponent<Collider2D>(), GetComponent<Collider2D>());
 		currentArrow.SetActive(true);
 
-		currentArrow.transform.position = arrowPosition;
 		currentArrow.transform.up = up;
+		currentArrow.transform.position = arrowPosition;
 
 		currentArrow.GetComponent<Rigidbody2D>().velocity = up * arrowSpeed;
 

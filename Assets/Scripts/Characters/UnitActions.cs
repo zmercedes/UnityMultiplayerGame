@@ -19,7 +19,6 @@ public class UnitActions : NetworkBehaviour {
 	bool isDashing = false;
 
 	// player forward direction at the start of attack/dash
-	[SyncVar]
 	protected Vector3 up;
 
 	public virtual void Awake(){		
@@ -40,6 +39,8 @@ public class UnitActions : NetworkBehaviour {
 	}
 
 	public void AttackToggle(){
+		if(isLocalPlayer)
+			CmdUp(player.up);
 		if(!isAttacking)
 			CmdAttackToggle();
 	}
@@ -55,6 +56,8 @@ public class UnitActions : NetworkBehaviour {
 	}
 
 	public void DashToggle(){
+		if(isLocalPlayer)
+			CmdUp(player.up);
 		if(!isDashing)
 			CmdDashToggle();
 	}
@@ -74,11 +77,9 @@ public class UnitActions : NetworkBehaviour {
 	}
 
 	IEnumerator Dash(){
-		if(isLocalPlayer){
-			up = player.up;
-			dashVelocity = up * dashSpeed;
-		}
-
+		
+		dashVelocity = up * dashSpeed;
+	
 		isDashing = true;
 		float elapsed = 0f;
 
@@ -104,5 +105,15 @@ public class UnitActions : NetworkBehaviour {
 		NetworkServer.Destroy(gameObject);
 		GameObject newPlayer = GameObject.Instantiate(netManager.playerPrefab, respawnPoint.position, respawnPoint.rotation);
 		NetworkServer.ReplacePlayerForConnection(this.connectionToClient, newPlayer, this.playerControllerId);
+	}
+
+	[Command]
+	public void CmdUp(Vector3 newUp){
+		RpcUp(newUp);
+	}
+
+	[ClientRpc]
+	void RpcUp(Vector3 newUp){
+		up = newUp;
 	}
 }

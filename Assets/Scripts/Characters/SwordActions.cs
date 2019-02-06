@@ -18,8 +18,6 @@ public class SwordActions : UnitActions {
 	}
 
 	public override IEnumerator Attack(){
-		if(isLocalPlayer)
-			up = player.up;
 
 		isAttacking = true;
 		weaponCollider.SetActive(!isLocalPlayer);
