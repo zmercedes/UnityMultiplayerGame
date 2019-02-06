@@ -5,9 +5,12 @@ Project files for a unity multiplayer game implemented using UNet.
 ## Features
 ### UI
 - The user interface hooks to server creation/joining/disconnecting, and player information, such as hp and coin count.
+- The canvas exists as a standalone object that persists through scene loading.
+- Upon joining game, the player can choose from multiple classes to spawn in as.
 
 ### Player
 - Player controls a character which can engage in combat and die.
+- On dying, can choose to respawn or disconnect.
 - PlayerController moves character in 8 directions and rotates to face mouse direction. connects to PlayerActions to activate actions on button presses.
   - WASD/directional keys to move
   - left click on mouse for attack
@@ -19,8 +22,8 @@ Project files for a unity multiplayer game implemented using UNet.
 
 ### Network
 - Created a custom network manager that handles server creation/joining with a UI. 
-- Not destroyed on load, so keeps a canvas as a child object across all scenes. This allows the UI to have consistent access to network functions.
-- Waits on server to be up and generated to spawn players.
+- Single object that persists through scene loading.
+- Waits on server to be up and generated to present character select screen.
 
 ### Procedurally Generated Map
 - Generates a different map every time server starts.
@@ -34,8 +37,6 @@ Project files for a unity multiplayer game implemented using UNet.
 - Coins are local player authority, deactivate on trigger, and reactivate after 5 seconds.
 
 ## Upcoming Features
-- player respawning
-- multiple combat classes to choose from
 - pause menu
 - projectiles
 - recovery items
@@ -49,8 +50,9 @@ Project files for a unity multiplayer game implemented using UNet.
 ### Technical Desirables
 - separation of client/server
   * look into headless servers, as well as lobby servers
-- input handling
 - error handling (handling disconnection and other errors)
+- default UI states
+- more robust player joining/leaving mechanisms (less error throwing when a player disconnects/leaves abruptly/is disconnected)
 
 ## Issues
 #### Getting player/coins to spawn after map has established reachable locations.
