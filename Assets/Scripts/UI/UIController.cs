@@ -6,7 +6,7 @@ public class UIController : MonoBehaviour {
 
 	// delegates
 
-	GameObject title,menu,loadText,disconnectButton,cancelButton,death;
+	GameObject title,menu,loadText,disconnectButton,cancelButton,characterSelect,death;
 
 	void Awake() {
 		if (FindObjectsOfType(GetType()).Length > 1)
@@ -16,6 +16,7 @@ public class UIController : MonoBehaviour {
 		MyNetworkManager netManager = GameObject.FindGameObjectWithTag("NetManager").GetComponent<MyNetworkManager>();
 		netManager.clientConnected += ClientConnected;
 		netManager.clientDisconnected += ClientDisconnected;
+		netManager.showCharacterSelect += CharacterSelect;
 
 		title = transform.GetChild(0).gameObject;
 		menu = transform.GetChild(1).gameObject;
@@ -23,6 +24,7 @@ public class UIController : MonoBehaviour {
 		disconnectButton = transform.GetChild(3).gameObject;
 		cancelButton = transform.GetChild(4).gameObject;
 		death = transform.GetChild(6).gameObject;
+		characterSelect = transform.GetChild(7).gameObject;
 		
 	}
 	
@@ -37,6 +39,18 @@ public class UIController : MonoBehaviour {
 		disconnectButton.SetActive(false);
 		title.SetActive(true);
 		menu.SetActive(true);
+	}
+
+	void CharacterSelect(){
+		title.SetActive(false);
+		loadText.SetActive(false);
+		characterSelect.SetActive(true);
+	}
+
+	public void CloseCharacterSelect(){
+		characterSelect.SetActive(false);
+		title.SetActive(true);
+		loadText.SetActive(true);
 	}
 
 	public void StartServerButton(){

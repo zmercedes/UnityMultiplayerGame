@@ -99,11 +99,11 @@ public class UnitActions : NetworkBehaviour {
 
 	[Command]
 	public void CmdRespawn(){
-		NetworkManager netManager = NetworkManager.singleton;
+		MyNetworkManager netManager = NetworkManager.singleton as MyNetworkManager;
 		Transform respawnPoint = netManager.GetStartPosition();
 		// NetworkIdentity playerID =  GetComponent<NetworkIdentity>();
 		NetworkServer.Destroy(gameObject);
-		GameObject newPlayer = GameObject.Instantiate(netManager.playerPrefab, respawnPoint.position, respawnPoint.rotation);
+		GameObject newPlayer = GameObject.Instantiate(netManager.selectedClass, respawnPoint.position, respawnPoint.rotation);
 		NetworkServer.ReplacePlayerForConnection(this.connectionToClient, newPlayer, this.playerControllerId);
 	}
 

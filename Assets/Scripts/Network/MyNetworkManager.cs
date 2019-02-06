@@ -9,6 +9,14 @@ public class MyNetworkManager : NetworkManager {
 
 	public event Action clientConnected;
 	public event Action clientDisconnected;
+	public event Action showCharacterSelect;
+
+	[SerializeField]
+	GameObject[] classes;
+
+	ClassMessage classMessage;
+	bool classSelected = false;
+	public GameObject selectedClass;
 	
 	void Awake(){
 		// destroys networkmanager if one is already active
@@ -18,7 +26,27 @@ public class MyNetworkManager : NetworkManager {
 
 		Application.targetFrameRate = 60; // possibly does not belong here
 	}
-	
+
+	public class ClassMessage : MessageBase {
+		public int chosenClass;
+	}
+
+	public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId, NetworkReader extraMessageReader){
+
+		ClassMessage message = extraMessageReader.ReadMessage<ClassMessage>();
+		selectedClass = classes[message.chosenClass];
+
+		GameObject player;
+
+		Transform startPos = GetStartPosition();
+
+		Vector3 pos = startPos != null ? startPos.position : Vector3.zero;
+
+		player = Instantiate(selectedClass, pos, Quaternion.identity) as GameObject;
+
+		NetworkServer.AddPlayerForConnection(conn, player, playerControllerId);
+	}
+
 	public override void OnClientConnect(NetworkConnection conn){
 		StartCoroutine(ClientSpawn(conn));
 	}
@@ -29,6 +57,7 @@ public class MyNetworkManager : NetworkManager {
 
 	IEnumerator ClientSpawn(NetworkConnection conn){
 		// make sure the correct scene is loaded		
+
 		Scene currentScene = SceneManager.GetActiveScene();
 		while(currentScene.name != "World"){
 			currentScene = SceneManager.GetActiveScene();
@@ -43,8 +72,11 @@ public class MyNetworkManager : NetworkManager {
 		}
 
 		// can display character select screen here?
-		
-		ClientScene.AddPlayer(conn, 0);
+		showCharacterSelect();
+		while(!classSelected)
+			yield return null;
+
+		ClientScene.AddPlayer(conn, 0, classMessage);
 		clientConnected();
 
 		yield return null;
@@ -72,5 +104,11 @@ public class MyNetworkManager : NetworkManager {
 
 	public void Cancel(){
 		StopClient();
+	}
+
+	public void SelectClass(int choice){
+		classMessage = new ClassMessage();
+		classMessage.chosenClass = choice;
+		classSelected = true;
 	}
 }
