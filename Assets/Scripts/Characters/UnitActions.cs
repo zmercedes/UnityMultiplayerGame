@@ -4,8 +4,9 @@ using System.Collections;
 
 public class UnitActions : NetworkBehaviour {
 
-	protected Transform player;
+	public int chosenClass;
 	Rigidbody2D rb;
+	protected Transform player;
 
 	// is the player currently attacking?
 	protected bool isAttacking = false;
@@ -103,7 +104,8 @@ public class UnitActions : NetworkBehaviour {
 		Transform respawnPoint = netManager.GetStartPosition();
 		// NetworkIdentity playerID =  GetComponent<NetworkIdentity>();
 		NetworkServer.Destroy(gameObject);
-		GameObject newPlayer = GameObject.Instantiate(netManager.selectedClass, respawnPoint.position, respawnPoint.rotation);
+		GameObject newPlayer = GameObject.Instantiate(netManager.classes[chosenClass], respawnPoint.position, respawnPoint.rotation);
+		newPlayer.GetComponent<UnitActions>().chosenClass = chosenClass;
 		NetworkServer.ReplacePlayerForConnection(this.connectionToClient, newPlayer, this.playerControllerId);
 	}
 

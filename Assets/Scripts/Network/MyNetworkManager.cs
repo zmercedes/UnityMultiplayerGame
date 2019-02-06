@@ -11,12 +11,10 @@ public class MyNetworkManager : NetworkManager {
 	public event Action clientDisconnected;
 	public event Action showCharacterSelect;
 
-	[SerializeField]
-	GameObject[] classes;
+	public GameObject[] classes;
 
 	ClassMessage classMessage;
 	bool classSelected = false;
-	public GameObject selectedClass;
 	
 	void Awake(){
 		// destroys networkmanager if one is already active
@@ -34,15 +32,14 @@ public class MyNetworkManager : NetworkManager {
 	public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId, NetworkReader extraMessageReader){
 
 		ClassMessage message = extraMessageReader.ReadMessage<ClassMessage>();
-		selectedClass = classes[message.chosenClass];
-
-		GameObject player;
+		GameObject selectedClass = classes[message.chosenClass];
 
 		Transform startPos = GetStartPosition();
 
 		Vector3 pos = startPos != null ? startPos.position : Vector3.zero;
 
-		player = Instantiate(selectedClass, pos, Quaternion.identity) as GameObject;
+		GameObject player = Instantiate(selectedClass, pos, Quaternion.identity) as GameObject;
+		player.GetComponent<UnitActions>().chosenClass = message.chosenClass;
 
 		NetworkServer.AddPlayerForConnection(conn, player, playerControllerId);
 	}
