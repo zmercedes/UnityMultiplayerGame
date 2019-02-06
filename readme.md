@@ -20,6 +20,12 @@ Project files for a unity multiplayer game implemented using UNet.
 - CharacterInfo is a networkbehaviour that keeps track of player attributes such as health, coins, etc. it also handles displaying this information to the players. localplayers will have a healthbar and coin counter, while remote players display a smaller healthbar beneath them.
 - Uses NetworkTransform and NetworkTransformChild to sync its position on the map.
 
+### Characters/Classes
+- Swordsblader
+  - uses a sword to attack
+- Archer
+  - shoots arrows to attack
+
 ### Network
 - Created a custom network manager that handles server creation/joining with a UI. 
 - Single object that persists through scene loading.
@@ -38,7 +44,6 @@ Project files for a unity multiplayer game implemented using UNet.
 
 ## Upcoming Features
 - pause menu
-- projectiles
 - recovery items
 - armor (reduces/blocks incoming damage? regenerates?)
 - weapon/armor upgrades
@@ -48,9 +53,11 @@ Project files for a unity multiplayer game implemented using UNet.
 - polish! (better character sprites, more interesting environments, visual effects, player abilities?, etc)
 
 ### Technical Desirables
+- environment generation
+  - using the maps edge collider line data to line the walls with appropriate sprites/graphics
+  - generating environment objects on map
 - separation of client/server
   * look into headless servers, as well as lobby servers
-- default UI states
 
 ## Issues
 #### Getting player/coins to spawn after map has established reachable locations.
