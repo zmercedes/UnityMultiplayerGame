@@ -17,23 +17,23 @@ public class CharacterInfo : NetworkBehaviour {
 	int health;
 
 	void Start(){
+		health = maxHealth;
 		if(isLocalPlayer){
 			GameObject canvas = GameObject.FindGameObjectWithTag("Canvas");
 			InfoUI = canvas.transform.GetChild(5).gameObject;
+			InfoUI.SetActive(true);
 			DeathUI = canvas.transform.GetChild(6).gameObject;
 			coinText = InfoUI.transform.GetChild(1).GetComponent<Text>();
 			coinText.text = "Coins: 0";
 			healthBar = InfoUI.transform.GetChild(2).GetChild(0).gameObject.GetComponent<SimpleHealthBar>();
 			healthText = InfoUI.transform.GetChild(3).GetComponent<Text>();
+			healthText.text = health.ToString() + " / " + maxHealth.ToString();
 		} else {
 			healthBar = transform.GetChild(2).GetChild(0).GetChild(0).gameObject.GetComponent<SimpleHealthBar>();
 			transform.GetChild(2).gameObject.SetActive(true);
 		}
 
-		health = maxHealth;
-		healthText.text = health.ToString() + " / " + maxHealth.ToString();
 		healthBar.UpdateBar(health, maxHealth);
-		InfoUI.SetActive(true);
 	}
 
 	void DecreaseHealth (int number){
