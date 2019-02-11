@@ -22,19 +22,40 @@ public class MapGen : NetworkBehaviour {
 
 	// rooms in map
 	List<Room> currentRooms;
-
-	// tiles that can be walked on (not a wall)
-	List<Coord> walkableTiles;
+	List<List<Coord>> roomCoordinates;
+	List<List<Coord>> hallCoordinates;
 
 	void Start(){
 		GenerateMap();
 	}
 
-	// read property for walkableTiles
+	// read property for RoomCoordinates
 	// used to generate a copy for other utilities
-	public List<Coord> WalkableTiles{
+	public List<List<Coord>> RoomCoordinates{
 		get {
-			return walkableTiles;
+			return roomCoordinates;
+		}
+	}
+
+	public List<List<Coord>> HallCoordinates{
+		get {
+			return hallCoordinates;
+		}
+	}
+
+	public List<Coord> WalkableCoordinates{
+		get {
+			List<Coord> walkable = new List<Coord>();
+			foreach(List<Coord> room in roomCoordinates){
+				foreach(Coord c in room)
+					walkable.Add(c);
+			}
+
+			foreach(List<Coord> hall in hallCoordinates){
+				foreach(Coord c in hall)
+					walkable.Add(c);
+			}
+			return walkable;
 		}
 	}
 
@@ -55,7 +76,8 @@ public class MapGen : NetworkBehaviour {
 	public void GenerateMap(){
 		currentBiome = Biome.forest;
 		currentRooms = new List<Room>();
-		walkableTiles = new List<Coord>();
+		roomCoordinates = new List<List<Coord>>();
+		hallCoordinates = new List<List<Coord>>();
 		// GetComponent<Renderer>().material = walls;
 		map = new int[currentBiome.width,currentBiome.height];
 		RandomFillMap();
@@ -65,7 +87,7 @@ public class MapGen : NetworkBehaviour {
 
 		ProcessMap();
 
-		int borderSize = 10; // sets border THICCness
+		int borderSize = 15; // sets border THICCness
 		int[,] borderedMap = new int[currentBiome.width + borderSize*2,currentBiome.height + borderSize*2];
 
 		for (int x = 0; x < borderedMap.GetLength(0); x++){
@@ -108,7 +130,6 @@ public class MapGen : NetworkBehaviour {
 					map[x,y] = 1;
 				else if (neighborWallTiles < currentBiome.automataRule) // rules to mess with for diff shapes
 					map[x,y] = 0;
-
 			}
 		}
 	}
@@ -148,6 +169,7 @@ public class MapGen : NetworkBehaviour {
 			if(roomRegion.Count < currentBiome.roomThreshold){
 				foreach(Coord tile in roomRegion)
 					map[tile.tileX,tile.tileY] = 1;
+
 			} else {
 				survivingRooms.Add(new Room(roomRegion, map));
 			}
@@ -161,10 +183,7 @@ public class MapGen : NetworkBehaviour {
 
 		currentRooms = survivingRooms;
 		foreach(Room roomTiles in currentRooms){
-			foreach(Coord coord in roomTiles.tiles){
-				if(!roomTiles.edgeTiles.Contains(coord))
-					walkableTiles.Add(coord);
-			}
+			roomCoordinates.Add(roomTiles.tiles);
 		}
 
 		ConnectClosestRooms(survivingRooms);
@@ -239,11 +258,14 @@ public class MapGen : NetworkBehaviour {
 		//Debug.DrawLine(Coord.ToWorldPoint(tileA),Coord.ToWorldPoint(tileB), Color.green, 100);
 
 		List<Coord> line = GetLine(tileA, tileB);
+		List<Coord> hallway = new List<Coord>(); 
 		foreach(Coord c in line)
-			DrawCircle(c,passageRad);
+			DrawCircle(c,passageRad,hallway);
+
+		hallCoordinates.Add(hallway);
 	}
 
-	void DrawCircle(Coord c, int r){
+	void DrawCircle(Coord c, int r, List<Coord> h){
 		for(int x = -r; x <= r; x++){
 			for(int y = -r; y <= r; y++){
 				if(x*x + y*y <= r*r){
@@ -251,7 +273,7 @@ public class MapGen : NetworkBehaviour {
 					int drawY = c.tileY + y;
 					if(IsInMapRange(drawX,drawY)){
 						map[drawX,drawY] = 0;
-						walkableTiles.Add(new Coord(drawX,drawY));
+						h.Add(new Coord(drawX,drawY));
 					}
 				}
 			}

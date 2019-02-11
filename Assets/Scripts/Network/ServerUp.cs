@@ -30,26 +30,30 @@ public class ServerUp : NetworkBehaviour {
 			yield return null;
 
 		HashSet<Coord> occupied = new HashSet<Coord>();
+		List<List<Coord>> rooms = mapGen.RoomCoordinates;
 		// moves spawn locations within map borders
 		foreach(Transform child in transform){
-			int position = Random.Range(0,mapGen.WalkableTiles.Count -1);
-			while(occupied.Contains(mapGen.WalkableTiles[position]))
-				position = Random.Range(0,mapGen.WalkableTiles.Count -1);
+			int randomRoom = Random.Range(0,rooms.Count-1);
+			int position = Random.Range(0,rooms[randomRoom].Count -1);
+			while(occupied.Contains(rooms[randomRoom][position]))
+				position = Random.Range(0,rooms[randomRoom].Count -1);
 
-			child.position = Coord.ToWorldPoint(mapGen.WalkableTiles[position]);
-			occupied.Add(mapGen.WalkableTiles[position]);
+			child.position = Coord.ToWorldPoint(rooms[randomRoom][position]);
+			occupied.Add(rooms[randomRoom][position]);
 		}
 
 		// initializing coins
-		for (int i = 0; i <numberOfCollectables; i ++){
-			int randomTile = Random.Range(0, mapGen.WalkableTiles.Count -1);
+		List<Coord> coords = mapGen.WalkableCoordinates;
+		for (int i = 0; i <numberOfCollectables; i++){
 
-			while(occupied.Contains(mapGen.WalkableTiles[randomTile]))
-				randomTile = Random.Range(0, mapGen.WalkableTiles.Count-1);
+			int randomTile = Random.Range(0, coords.Count -1);
+
+			while(occupied.Contains(coords[randomTile]))
+				randomTile = Random.Range(0, coords.Count-1);
 			
-			Vector3 position = Coord.ToWorldPoint(mapGen.WalkableTiles[randomTile]);
+			Vector3 position = Coord.ToWorldPoint(coords[randomTile]);
 			collectable = Instantiate (collectablePrefab, position, Quaternion.identity, transform); 
-			occupied.Add(mapGen.WalkableTiles[randomTile]);
+			occupied.Add(coords[randomTile]);
 			// spawn coin across all clients
 			NetworkServer.Spawn(collectable);
 		}
